@@ -1,7 +1,5 @@
 (defun compile (scheme-expression)
-  """
-  compiler a given SCHEME-EXPRESSION to the lambda calculus.
-  """
+  "compile a given SCHEME-EXPRESSION to the lambda calculus."
   (cond ((integerp scheme-expression)
 	 (church-numeral scheme-expression))
 	((zerop scheme-expression) (lambda-zerop scheme-expression))
