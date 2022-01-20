@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 (in-package #:scheme-to-lambda-calculus)
 
 (defun compile-scheme (scheme-expression)
@@ -6,11 +5,6 @@
   compiler a given SCHEME-EXPRESSION to the lambda calculus.
   "
   (cond ((integer-p scheme-expression)
-=======
-(defun compile (scheme-expression)
-  "compile a given SCHEME-EXPRESSION to the lambda calculus."
-  (cond ((integerp scheme-expression)
->>>>>>> 0316ecd091a4a11e8a6f73747911d67bb71bd3ee
 	 (church-numeral scheme-expression))
 	((zero-p scheme-expression) (lambda-zerop scheme-expression))
 	((symbolp scheme-expression)
