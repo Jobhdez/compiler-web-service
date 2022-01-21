@@ -8,6 +8,6 @@ So there's some bugs. Some expressions compile but not compile to the right lamb
 As of now I am not able to use `asdf` to load the system.
 
 To load the system navigate to the `src` directory of the project and after running `sbcl` type:
-- `(load "packages.lisp")
-- `(load "compiler.lisp")
+- `(load "packages.lisp")`
+- `(load "compiler.lisp")`
 - `(in-package #:scheme-to-lambda-calculus)`
