@@ -1,4 +1,5 @@
 # scheme-to-lambda-compiler
-a scheme to lambda calculus compiler just for fun
+a scheme to lambda calculus compiler just for fun.
 
-Doesn't currently work; there's a few bugs. Not hard bugs though. There are just a few typos.
+Some scheme expressions compile to the lambda calculus. Some don't 
+So there's some bugs.
