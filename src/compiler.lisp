@@ -8,16 +8,19 @@
 	 (church-numeral scheme-expression))
 	((zero-p scheme-expression)
 	 `(,lambda-zerop ,(compile-scheme scheme-expression)))
-	((symbolp scheme-expression)
-	 scheme-expression)
 	((true-p scheme-expression)
 	 lambda-true)
 	((false-p scheme-expression)
 	 lambda-false)
+	((and (symbolp scheme-expression) (or (not (eq scheme-expression 'ltrue)) (not (eq scheme-expression 'lfalse))))
+	 scheme-expression)
 	((ifp scheme-expression)
-	 (compile-scheme `(,(getcond scheme-expression)
-		    (lamb () ,(truef scheme-expression))
-		    (lamb () ,(falsef scheme-expression)))))
+	 (let ((conds (getcond scheme-expression))
+	       (tt (truef scheme-expression))
+	       (ff (falsef scheme-expression)))
+	   (compile-scheme `(,conds
+			     (lamb () ,tt)
+			     (lamb () ,ff)))))
 	((and-p scheme-expression)
 	 (compile-scheme `(if ,(leftexp scheme-expression)
 			      ,(rightexp scheme-expression)
@@ -29,12 +32,12 @@
 	 `((,add ,(compile-scheme (leftexp scheme-expression)))
 	  ,(compile-scheme (rightexp scheme-expression))))
 	 ((multiplicationp scheme-expression)
-	 `((,mul ,(compile-scheme (leftexp scheme-expression)))
-	  ,(compile-scheme (rightexp scheme-expression))))
+	  `((,mul ,(compile-scheme (leftexp scheme-expression)))
+	    ,(compile-scheme (rightexp scheme-expression))))
 	((equal-p scheme-expression)
-	 (compile-scheme `(and-p (zero-p (sub ,(leftexp scheme-expression)
+	 (compile-scheme `(and (zero? (- ,(leftexp scheme-expression)
 				              ,(rightexp scheme-expression)))
-				 (zero-p (sub ,(rightexp scheme-expression)
+			x	 (zero? (- ,(rightexp scheme-expression)
 					      ,(leftexp scheme-expression))))))
 					      
 	((quotep scheme-expression)
@@ -83,19 +86,18 @@
 
 ; Church numerals.
 (defun church-numeral (n)
-  
-  (defun apply-n (f n z)
+  (cond
+    ((= n 0)    `(λ (f) (λ (z) z)))
+    (t      `(λ (f) (λ (z) 
+                       ,(apply-n 'f n 'z))))))
+(defun apply-n (f n z)
     (cond
       ((= n 0)  z)
       (t     `(,f ,(apply-n f (- n 1) z)))))
        
-  (cond
-    ((= n 0)    `(λ (f) (λ (z) z)))
-    (t      `(λ (f) (λ (z) 
-                          ,(apply-n 'f n 'z))))))
 
-(defvar lambda-zerop `(λ (n)
-			 ((n (λ (_) ,lambda-false)) ,lambda-true)))
+(defvar lambda-zerop `(lamb (n)
+			 ((n (lamb () ,lambda-false)) ,lambda-true)))
                   
 (defvar add '(λ (n)
                (λ (m)
@@ -166,8 +168,8 @@
 
 (defun zero-p (exp)
   "checks if EXP is a zero."
-  (and (numberp exp)
-       (equalp exp 0)))
+  (and (listp exp)
+       (eq (car exp) 'zero?)))
 
 (defun subtractionp (exp)
   "checks if EXP is a subtraction."
@@ -187,7 +189,7 @@
 (defun equal-p (exp)
   "checks if EXP is an equal-p."
   (and (listp exp)
-       (equalp (car exp) 'equal-p)))
+       (equalp (car exp) '=)))
 
 (defun quotep (exp)
   "Checks if EXP is a quote."
@@ -302,12 +304,10 @@
        (symbolp (car exp))))
 
 (defun true-p (exp)
-  (and (listp exp)
-       (equalp (car exp) 'ltrue)))
+  (eq exp 'ltrue))
 
 (defun false-p (exp)
-  (and (listp exp)
-       (equalp (car exp) 'lfalse)))
+  (eq exp'lfalse))
 
 (defun ifp (exp)
   (and (listp exp)
@@ -325,3 +325,5 @@
 (defun and-p (exp)
   (and (listp exp)
        (eq (car exp) 'and)))
+
+(in-package #:scheme-to-lambda-calculus)
