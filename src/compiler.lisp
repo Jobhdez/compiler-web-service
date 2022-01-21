@@ -6,7 +6,8 @@
   "
   (cond ((integer-p scheme-expression)
 	 (church-numeral scheme-expression))
-	((zero-p scheme-expression) (lambda-zerop scheme-expression))
+	((zero-p scheme-expression)
+	 `(,lambda-zerop ,(compile-scheme scheme-expression)))
 	((symbolp scheme-expression)
 	 scheme-expression)
 	((true-p scheme-expression)
@@ -14,10 +15,13 @@
 	((false-p scheme-expression)
 	 lambda-false)
 	((ifp scheme-expression)
-	 (compile `(,(getcond scheme-expression)
-		    (lambda () ,(truef scheme-expression))
-			  (lambda () ,(falsef scheme-expression)))))
-			    
+	 (compile-scheme `(,(getcond scheme-expression)
+		    (lamb () ,(truef scheme-expression))
+		    (lamb () ,(falsef scheme-expression)))))
+	((and-p scheme-expression)
+	 (compile-scheme `(if ,(leftexp scheme-expression)
+			      ,(rightexp scheme-expression)
+			    lambda-false)))
 	((subtractionp scheme-expression)
 	 `((,sub ,(compile-scheme (leftexp scheme-expression)))
 	  ,(compile-scheme (rightexp scheme-expression))))
@@ -26,10 +30,13 @@
 	  ,(compile-scheme (rightexp scheme-expression))))
 	 ((multiplicationp scheme-expression)
 	 `((,mul ,(compile-scheme (leftexp scheme-expression)))
-	 , (compile-scheme (rightexp scheme-expression))))
+	  ,(compile-scheme (rightexp scheme-expression))))
 	((equal-p scheme-expression)
-	 (compile-scheme `(and (zerop (sub ,(leftexp scheme-expression)
-				    ,(rightexp scheme-expression))))))
+	 (compile-scheme `(and-p (zero-p (sub ,(leftexp scheme-expression)
+				              ,(rightexp scheme-expression)))
+				 (zero-p (sub ,(rightexp scheme-expression)
+					      ,(leftexp scheme-expression))))))
+					      
 	((quotep scheme-expression)
 	 lambda-nil)
 	((cons-p scheme-expression)
@@ -43,23 +50,23 @@
 	 `(,lambda-null ,(compile-scheme (null-exp scheme-expression))))
 	((lambdap scheme-expression)
 	 (if (lambda-no-parametersp scheme-expression)
-	     `(lambda () ,(compile-scheme (lambda-exp scheme-expression)))
-	   `(lambda (,(lambda-parameter scheme-expression))
+	     `(lamb () ,(compile-scheme (lambda-exp scheme-expression)))
+	   `(lamb (,(lambda-parameter scheme-expression))
 	      ,(compile-scheme (lambda-exp scheme-expression)))))
 	((letp scheme-expression)
-	 (compile-scheme `((lambda (,@(let-variable scheme-expression))
+	 (compile-scheme `((lamb (,@(let-variable scheme-expression))
 		      ,(let-body scheme-expression))
 		    ,@(let-expression scheme-expression))))
 	((letrecp scheme-expression)
 	 (compile-scheme `(let ((,(letrec-variable scheme-expression)
-			  (,Y (lambda (,(letrec-variable scheme-expression))
+			  (,Y (lamb (,(letrec-variable scheme-expression))
 				,(letrec-expression scheme-expression)))))
 		     ,(letrec-body scheme-expression))))
 	((applicationp scheme-expression)
-	 (if (= (length scheme-expression) 1))
+	 (if (equalp (length scheme-expression) 1)
 	     (compile-scheme `(,(compile-scheme f) ,lambda-void))
 	   `(,(compile-scheme (leftexp scheme-expression))
-	     ,(compile-scheme (rightexp scheme-expression))))
+	     ,(compile-scheme (rightexp scheme-expression)))))
 	(t
 	 "hello")))
 
@@ -87,8 +94,8 @@
     (t      `(λ (f) (λ (z) 
                           ,(apply-n 'f n 'z))))))
 
-(defvar lambda-zero? `(λ (n)
-                 ((n (λ (_) ,lambda-false)) ,lambda-true)))
+(defvar lambda-zerop `(λ (n)
+			 ((n (λ (_) ,lambda-false)) ,lambda-true)))
                   
 (defvar add '(λ (n)
                (λ (m)
@@ -180,7 +187,7 @@
 (defun equal-p (exp)
   "checks if EXP is an equal-p."
   (and (listp exp)
-       (equalp (car exp) '=)))
+       (equalp (car exp) 'equal-p)))
 
 (defun quotep (exp)
   "Checks if EXP is a quote."
@@ -258,7 +265,7 @@
 (defun lambdap (exp)
   "Checks if EXP is a lambda."
   (and (listp exp)
-       (equalp (car exp) 'lambda)))
+       (equalp (car exp) 'lamb)))
 
 (defun lambda-parameter (exp)
   "gets the lambda parameter."
@@ -314,3 +321,7 @@
 
 (defun falsef (exp)
   (car (cdr (cdr (cdr exp)))))
+
+(defun and-p (exp)
+  (and (listp exp)
+       (eq (car exp) 'and)))
