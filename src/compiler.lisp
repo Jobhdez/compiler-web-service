@@ -7,7 +7,7 @@
   (cond ((integer-p scheme-expression)
 	 (church-numeral scheme-expression))
 	((zero-p scheme-expression)
-	 `(,lambda-zerop ,(compile-scheme scheme-expression)))
+	 `(,lambda-zerop ,(compile-scheme (zeroexp scheme-expression))))
 	((true-p scheme-expression)
 	 lambda-true)
 	((false-p scheme-expression)
@@ -170,6 +170,8 @@
   "checks if EXP is a zero."
   (and (listp exp)
        (eq (car exp) 'zero?)))
+(defun zeroexp (exp)
+  (car (cdr exp)))
 
 (defun subtractionp (exp)
   "checks if EXP is a subtraction."
@@ -325,5 +327,3 @@
 (defun and-p (exp)
   (and (listp exp)
        (eq (car exp) 'and)))
-
-(in-package #:scheme-to-lambda-calculus)
