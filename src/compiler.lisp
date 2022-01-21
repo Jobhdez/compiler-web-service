@@ -37,7 +37,7 @@
 	((equal-p scheme-expression)
 	 (compile-scheme `(and (zero? (- ,(leftexp scheme-expression)
 				              ,(rightexp scheme-expression)))
-			x	 (zero? (- ,(rightexp scheme-expression)
+				 (zero? (- ,(rightexp scheme-expression)
 					      ,(leftexp scheme-expression))))))
 					      
 	((quotep scheme-expression)
@@ -74,21 +74,21 @@
 	 "hello")))
 
 ; Void.
-(defvar lambda-void `(λ (void) void))
+(defvar lambda-void `(lamb (void) void))
 
 ; Error.
 (defvar lambda-error '(λ (_) 
                  ((λ (f) (f f)) (λ (f) (f f)))))
 
 ; Booleans.
-(defvar lambda-true  `(λ (t) (λ (f) (t ,lambda-void))))
-(defvar lambda-false `(λ (t) (λ (f) (f ,lambda-void))))
+(defvar lambda-true  `(lamb (t) (lamb (f) (t ,lambda-void))))
+(defvar lambda-false `(lamb (t) (lamb (f) (f ,lambda-void))))
 
 ; Church numerals.
 (defun church-numeral (n)
   (cond
-    ((= n 0)    `(λ (f) (λ (z) z)))
-    (t      `(λ (f) (λ (z) 
+    ((= n 0)    `(lamb (f) (lamb (z) z)))
+    (t      `(lamb (f) (lamb (z) 
                        ,(apply-n 'f n 'z))))))
 (defun apply-n (f n z)
     (cond
@@ -204,7 +204,7 @@
 (defun carp (exp)
   "Checks if EXP is a car."
   (and (listp exp)
-       (equalp (car exp) 'quote)))
+       (equalp (car exp) 'car)))
 
 (defun car-exp (exp)
   "get car's expression."
