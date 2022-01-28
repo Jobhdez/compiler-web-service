@@ -18,9 +18,11 @@ To load the system navigate to the `src` directory of the project and after runn
 (((LAMBDA (T) (LAMBDA (F) (T (LAMBDA (VOID) VOID))))
   (LAMB NIL (LAMBDA (F) (LAMBDA (Z) (F Z)))))
  (LAMB NIL (LAMBDA (F) (LAMBDA (Z) (F Z)))))
+ 
 * (compile-scheme '(and 1 1))
 (((LAMBDA (F) (LAMBDA (Z) (F Z))) (LAMB NIL (LAMBDA (F) (LAMBDA (Z) (F Z)))))
  (LAMB NIL (LAMBDA (T) (LAMBDA (F) (F (LAMBDA (VOID) VOID))))))
+ 
 * (compile-scheme '(- 1 1))
 (((LAMBDA (N)
     (LAMBDA (M)
