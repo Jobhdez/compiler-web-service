@@ -15,16 +15,13 @@
 	((and (symbolp scheme-expression) (or (not (eq scheme-expression 'ltrue)) (not (eq scheme-expression 'lfalse))))
 	 scheme-expression)
 	((ifp scheme-expression)
-	 (let ((conds (getcond scheme-expression))
-	       (tt (truef scheme-expression))
-	       (ff (falsef scheme-expression)))
-	   (compile-scheme `(,conds
-			     (lamb () ,tt)
-			     (lamb () ,ff)))))
+	   (compile-scheme `(,(getcond scheme-expression)
+			     (lambda () ,(truef scheme-expression))
+			     (lambda () ,(falsef scheme-expression)))))
 	((and-p scheme-expression)
 	 (compile-scheme `(if ,(leftexp scheme-expression)
 			      ,(rightexp scheme-expression)
-			    lambda-false)))
+			    lfalse)))
 	((subtractionp scheme-expression)
 	 `((,sub ,(compile-scheme (leftexp scheme-expression)))
 	  ,(compile-scheme (rightexp scheme-expression))))
@@ -57,108 +54,115 @@
 	   `(lamb (,(lambda-parameter scheme-expression))
 	      ,(compile-scheme (lambda-exp scheme-expression)))))
 	((letp scheme-expression)
-	 (compile-scheme `((lamb (,@(let-variable scheme-expression))
+	 (compile-scheme `((lambda (,@(let-variable scheme-expression))
 		      ,(let-body scheme-expression))
 		    ,@(let-expression scheme-expression))))
 	((letrecp scheme-expression)
 	 (compile-scheme `(let ((,(letrec-variable scheme-expression)
-			  (,Y (lamb (,(letrec-variable scheme-expression))
+			  (,Y (lambda (,(letrec-variable scheme-expression))
 				,(letrec-expression scheme-expression)))))
 		     ,(letrec-body scheme-expression))))
-	((applicationp scheme-expression)
-	 (if (equalp (length scheme-expression) 1)
-	     (compile-scheme `(,(compile-scheme f) ,lambda-void))
-	   `(,(compile-scheme (leftexp scheme-expression))
-	     ,(compile-scheme (rightexp scheme-expression)))))
+	((application-p scheme-expression)
+	 (cond ((equalp (length scheme-expression) 1)
+		(compile-scheme `(,(compile-scheme (car scheme-expression)) ,lambda-void)))
+	       ((equalp (length scheme-expression) 2)
+		`(,(compile-scheme (car scheme-expression))
+		  ,(compile-scheme (car (cdr scheme-expression)))))
+	       (t
+		(compile-scheme `((,(car scheme-expression)
+				   ,(car (cdr scheme-expression)))
+				  ,(car (cdr (cdr scheme-expression))))))))
+				 
 	(t
 	 "hello")))
 
 ; Void.
-(defvar lambda-void `(lamb (void) void))
+(defvar lambda-void `(lambda (void) void))
 
 ; Error.
-(defvar lambda-error '(λ (_) 
-                 ((λ (f) (f f)) (λ (f) (f f)))))
+(defvar lambda-error '(lambda ()
+			 ((lambda (f) (f f)) (lambda (f) (f f)))))
 
 ; Booleans.
-(defvar lambda-true  `(lamb (t) (lamb (f) (t ,lambda-void))))
-(defvar lambda-false `(lamb (t) (lamb (f) (f ,lambda-void))))
+(defvar lambda-true  `(lambda (t) (lambda (f) (t ,lambda-void))))
+(defvar lambda-false `(lambda (t) (lambda (f) (f ,lambda-void))))
 
 ; Church numerals.
 (defun church-numeral (n)
   (cond
-    ((= n 0)    `(lamb (f) (lamb (z) z)))
-    (t      `(lamb (f) (lamb (z) 
+    ((= n 0)    `(lambda (f) (lambda (z) z)))
+    (t      `(lambda (f) (lambda (z) 
                        ,(apply-n 'f n 'z))))))
 (defun apply-n (f n z)
     (cond
-      ((= n 0)  z)
-      (t     `(,f ,(apply-n f (- n 1) z)))))
+      ((= n 0) z)
+      (t
+       `(,f ,(apply-n f (- n 1) z)))))
        
 
-(defvar lambda-zerop `(lamb (n)
-			 ((n (lamb () ,lambda-false)) ,lambda-true)))
+(defvar lambda-zerop `(lambda (n)
+			((n (lambda () ,lambda-false)) ,lambda-true)))
                   
-(defvar add '(λ (n)
-               (λ (m)
-                 (λ (f)
-                   (λ (z)
+(defvar add '(lambda (n)
+               (lambda (m)
+                 (lambda (f)
+                   (lambda (z)
                      ((m f) ((n f) z)))))))
 
-(defvar mul '(λ (n)
-               (λ (m)
-                 (λ (f)
-                   (λ (z)
+(defvar mul '(lambda (n)
+               (lambda (m)
+                 (lambda (f)
+                   (lambda (z)
                      ((m (n f)) z))))))
                      
-(defvar pred '(λ (n)
-                (λ (f)
-                  (λ (z)
-                    (((n (λ (g) (λ (h) 
+(defvar pred '(lambda (n)
+                (lambda (f)
+                  (lambda (z)
+                    (((n (lambda (g) (lambda (h) 
                                   (h (g f)))))
-                      (λ (u) z))
-                     (λ (u) u))))))
+                      (lambda (u) z))
+                     (lambda (u) u))))))
 
-(defvar sub `(λ (n)
-               (λ (m)
+(defvar sub `(lambda (n)
+               (lambda (m)
                  ((m ,pred) n))))
 
 
 ; Lists.
-(defvar lambda-cons `(λ (car) 
-                (λ (cdr)
-                  (λ (on-cons)
-                    (λ (on-nil)
-                      ((on-cons car) cdr))))))
+(defvar lambda-cons `(lambda (car)
+		       (lambda (cdr)
+			  (lambda (on-cons)
+			     (lambda (on-nil)
+				((on-cons car) cdr))))))
 
-(defvar lambda-nil `(λ (on-cons)
-               (λ (on-nil)
-                 (on-nil ,lambda-void))))
+(defvar lambda-nil `(lambda (on-cons)
+		      (lambda (on-nil)
+			(on-nil ,lambda-void))))
 
-(defvar lambda-car `(λ (list)
-               ((list (λ (car)
-                       (λ (cdr)
-                         car)))
-                ,lambda-error)))
+(defvar lambda-car `(lambda (list)
+		      ((list (lambda (car)
+			       (lambda (cdr)
+				 car)))
+		       ,lambda-error)))
 
-(defvar lambda-cdr `(λ (list)
-               ((list (λ (car)
-                       (λ (cdr)
-                         cdr)))
-                ,lambda-error)))
+(defvar lambda-cdr `(lambda (list)
+		      ((list (lambda (car)
+			       (lambda (cdr)
+				 cdr)))
+		       ,lambda-error)))
 
 "(defvar PAIR? `(λ (list)
                  ((list (λ (_) (λ (_) ,TRUE)))
                   (λ (_) ,FALSE))))"
 
-(defvar lambda-nullp `(λ (list)
-                 ((list (λ (_) (λ (_) ,lambda-false)))
-                  (λ (_) ,lambda-true))))
+(defvar lambda-nullp `(lambda (list)
+			((list (lambda () (lambda () ,lambda-false)))
+			 (lambda () ,lambda-true))))
 
 
 ; Recursion.
-(defvar Y '((λ (y) (λ (F) (F (λ (x) (((y y) F) x))))) 
-            (λ (y) (λ (F) (F (λ (x) (((y y) F) x)))))))
+(defvar Y '((lambda (y) (lambda (F) (F (lambda (x) (((y y) F) x))))) 
+            (lambda (y) (lambda (F) (F (lambda (x) (((y y) F) x)))))))
 
 
 (defun integer-p (exp)
@@ -269,7 +273,7 @@
 (defun lambdap (exp)
   "Checks if EXP is a lambda."
   (and (listp exp)
-       (equalp (car exp) 'lamb)))
+       (equalp (car exp) 'lambda)))
 
 (defun lambda-parameter (exp)
   "gets the lambda parameter."
@@ -301,9 +305,8 @@
   "gets the lambda expression."
   (car (cdr (cdr exp))))
 
-(defun applicationp (exp)
-  (and (listp exp)
-       (symbolp (car exp))))
+(defun application-p (exp)
+  (listp exp))
 
 (defun true-p (exp)
   (eq exp 'ltrue))
