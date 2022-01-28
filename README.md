@@ -38,6 +38,7 @@ To load the system navigate to the `src` directory of the project and after runn
 (((LAMBDA (N) (LAMBDA (M) (LAMBDA (F) (LAMBDA (Z) ((M F) ((N F) Z))))))
   (LAMBDA (F) (LAMBDA (Z) Z)))
  (LAMBDA (F) (LAMBDA (Z) Z)))
+ 
 * (compile-scheme '(* 0 0))
 (((LAMBDA (N) (LAMBDA (M) (LAMBDA (F) (LAMBDA (Z) ((M (N F)) Z)))))
   (LAMBDA (F) (LAMBDA (Z) Z)))
