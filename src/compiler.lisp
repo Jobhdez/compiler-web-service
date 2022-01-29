@@ -2,7 +2,7 @@
 
 (defun compile-scheme (scheme-expression)
   "
-  compiler a given SCHEME-EXPRESSION to the lambda calculus.
+  compile a given SCHEME-EXPRESSION to the lambda calculus.
   "
   (cond ((integer-p scheme-expression)
 	 (church-numeral scheme-expression))
@@ -76,18 +76,18 @@
 	(t
 	 "hello")))
 
-; Void.
+
 (defvar lambda-void `(lambda (void) void))
 
-; Error.
+
 (defvar lambda-error '(lambda ()
 			 ((lambda (f) (f f)) (lambda (f) (f f)))))
 
-; Booleans.
+
 (defvar lambda-true  `(lambda (t) (lambda (f) (t ,lambda-void))))
 (defvar lambda-false `(lambda (t) (lambda (f) (f ,lambda-void))))
 
-; Church numerals.
+
 (defun church-numeral (n)
   (cond
     ((= n 0)    `(lambda (f) (lambda (z) z)))
@@ -128,7 +128,7 @@
                  ((m ,pred) n))))
 
 
-; Lists.
+
 (defvar lambda-cons `(lambda (car)
 		       (lambda (cdr)
 			  (lambda (on-cons)
@@ -160,7 +160,7 @@
 			 (lambda () ,lambda-true))))
 
 
-; Recursion.
+
 (defvar Y '((lambda (y) (lambda (F) (F (lambda (x) (((y y) F) x))))) 
             (lambda (y) (lambda (F) (F (lambda (x) (((y y) F) x)))))))
 
