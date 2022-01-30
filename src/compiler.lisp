@@ -87,17 +87,17 @@
 (defvar lambda-true  `(lambda (t) (lambda (f) (t ,lambda-void))))
 (defvar lambda-false `(lambda (t) (lambda (f) (f ,lambda-void))))
 
-
 (defun church-numeral (n)
-  (cond
-    ((= n 0)    `(lambda (f) (lambda (z) z)))
-    (t      `(lambda (f) (lambda (z) 
-                       ,(apply-n 'f n 'z))))))
+  (if (= n 0)
+      `(lambda (f) (lambda (z) z))
+    `(lambda (f) (lambda (z) ,(apply-n 'f n 'z)))))
+
 (defun apply-n (f n z)
-    (cond
-      ((= n 0) z)
-      (t
-       `(,f ,(apply-n f (- n 1) z)))))
+  (if (= n 0)
+      z
+    `(,f ,(apply-n f (- n 1) z))))
+
+
        
 
 (defvar lambda-zerop `(lambda (n)
