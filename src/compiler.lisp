@@ -74,7 +74,7 @@
 				  ,(car (cdr (cdr scheme-expression))))))))
 				 
 	(t
-	 "hello")))
+	 (error "~S is an unknown expression." scheme-expression))))
 
 
 (defvar lambda-void `(lambda (void) void))
