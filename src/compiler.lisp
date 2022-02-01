@@ -54,14 +54,14 @@
 	   `(lambda (,(lambda-parameter scheme-expression))
 	      ,(compile-scheme (lambda-exp scheme-expression)))))
 	((letp scheme-expression)
-	 (compile-scheme `((lambda (,@(let-variable scheme-expression))
+	 (compile-scheme `((lambda (,(let-variable scheme-expression))
 		      ,(let-body scheme-expression))
-		    ,@(let-expression scheme-expression))))
+		    ,(let-expression scheme-expression))))
 	((letrecp scheme-expression)
 	 (compile-scheme `(let ((,(letrec-variable scheme-expression)
-			  (,Y (lambda (,(letrec-variable scheme-expression))
-				,(letrec-expression scheme-expression)))))
-		     ,(letrec-body scheme-expression))))
+				 (,Y (lambda (,(letrec-variable scheme-expression))
+				       ,(letrec-expression scheme-expression)))))
+			    ,(letrec-body scheme-expression))))
 	((application-p scheme-expression)
 	 (cond ((equalp (length scheme-expression) 1)
 		(compile-scheme `(,(compile-scheme (car scheme-expression)) ,lambda-void)))
@@ -278,6 +278,7 @@
 (defun lambda-parameter (exp)
   "gets the lambda parameter."
   (car (car (cdr exp))))
+   
 
 (defun lambda-exp (exp)
   "gets the lambda exp."
