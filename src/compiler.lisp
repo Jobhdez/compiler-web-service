@@ -55,8 +55,8 @@
 	      ,(compile-scheme (lambda-exp scheme-expression)))))
 	((letp scheme-expression)
 	 (compile-scheme `((lambda (,(let-variable scheme-expression))
-		      ,(let-body scheme-expression))
-		    ,(let-expression scheme-expression))))
+			     ,(let-body scheme-expression))
+			   ,(let-expression scheme-expression))))
 	((letrecp scheme-expression)
 	 (compile-scheme `(let ((,(letrec-variable scheme-expression)
 				 (,Y (lambda (,(letrec-variable scheme-expression))
@@ -313,7 +313,7 @@
   (eq exp 'ltrue))
 
 (defun false-p (exp)
-  (eq exp'lfalse))
+  (eq exp 'lfalse))
 
 (defun ifp (exp)
   (and (listp exp)
