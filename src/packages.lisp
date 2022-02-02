@@ -1,3 +1,4 @@
 (defpackage #:scheme-to-lambda-calculus
   (:use #:common-lisp)
-  (:export #:compile-scheme))
+  (:export #:compile-scheme
+	   #:repl))

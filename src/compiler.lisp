@@ -331,3 +331,11 @@
 (defun and-p (exp)
   (and (listp exp)
        (eq (car exp) 'and)))
+
+
+;;;;;; repl
+
+(defun repl ()
+  (loop
+   (print 'λ>)
+   (print (compile-scheme (read)))))
