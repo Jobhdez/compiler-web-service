@@ -336,6 +336,8 @@
 ;;;;;; repl
 
 (defun repl ()
+  (print 'λ>)
   (loop
    (print 'λ>)
-   (print (compile-scheme (read)))))
+   (print (compile-scheme (read)))
+   (print 'λ>)))
