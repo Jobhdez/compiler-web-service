@@ -6,6 +6,16 @@ a scheme to lambda calculus compiler just for fun.
 
 2. For this you need to clone this repo into a place SBCL can see -- i.e., `~/quicklisp/local-projects/`.
 3. Run `(in-package #:scheme-to-lambda-calculus)`
+4. Start the repl: `(repl)`
+
+       λ> (if ltrue 1 1)
+       
+       
+       λ>
+         (((LAMBDA (T) (LAMBDA (F) (T (LAMBDA (VOID) VOID))))
+           (LAMB NIL (LAMBDA (F) (LAMBDA (Z) (F Z)))))
+          (LAMBA NIL (LAMBDA (F) (LAMBDA (Z) (F Z)))))
+       
 
 # Some Examples
 ```
