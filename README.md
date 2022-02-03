@@ -13,8 +13,8 @@ a scheme to lambda calculus compiler just for fun.
        
        λ>
          (((LAMBDA (T) (LAMBDA (F) (T (LAMBDA (VOID) VOID))))
-           (LAMB NIL (LAMBDA (F) (LAMBDA (Z) (F Z)))))
-          (LAMBA NIL (LAMBDA (F) (LAMBDA (Z) (F Z)))))
+           (LAMBDA NIL (LAMBDA (F) (LAMBDA (Z) (F Z)))))
+          (LAMBDA NIL (LAMBDA (F) (LAMBDA (Z) (F Z)))))
        
 
 # Some Examples
