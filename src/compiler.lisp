@@ -151,9 +151,6 @@
 				 cdr)))
 		       ,lambda-error)))
 
-"(defvar PAIR? `(λ (list)
-                 ((list (λ (_) (λ (_) ,TRUE)))
-                  (λ (_) ,FALSE))))"
 
 (defvar lambda-nullp `(lambda (list)
 			((list (lambda () (lambda () ,lambda-false)))
