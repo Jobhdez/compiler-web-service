@@ -140,3 +140,6 @@ a scheme to lambda calculus compiler just for fun.
          N)
         (LAMBDA (F) (LAMBDA (Z) (F Z)))))))))))
 ```
+
+# Acknowledgement
+This tiny compiler is based on the one [compiler](https://matt.might.net/articles/compiling-up-to-lambda-calculus/) by Dr. Might. This tiny compiler, so far, it is just a re-write of his.
