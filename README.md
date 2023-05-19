@@ -1,12 +1,14 @@
-# Scheme-to-Lambda-Calculus-Compiler
+# Scheme-to-Lambda-Calculus-Compiler web service
 a scheme to lambda calculus compiler just for fun.
 
 # Using the program
 1. Run `(ql:quickload :lambda-calculus-compiler)`. 
 
 2. For this you need to clone this repo into a place SBCL can see -- i.e., `~/quicklisp/local-projects/`.
-3. Run `(in-package #:scheme-to-lambda-calculus)`
-4. Start the REPL: `(repl)`
+
+## Using the compiler
+4. Run `(in-package #:scheme-to-lambda-calculus)`
+5. Start the REPL: `(repl)`
 
        λ> (if ltrue 1 1)
        
@@ -15,6 +17,11 @@ a scheme to lambda calculus compiler just for fun.
          (((LAMBDA (T) (LAMBDA (F) (T (LAMBDA (VOID) VOID))))
            (LAMBDA NIL (LAMBDA (F) (LAMBDA (Z) (F Z)))))
           (LAMBDA NIL (LAMBDA (F) (LAMBDA (Z) (F Z)))))
+          
+## Using the web service
+1. `(in-package :lambda-server)`
+2. `(start-server)`
+3. In your browser point to `http://localhost:4243/compile?exp=(if (= 2 2) 2 3)`
        
 
 # Some Examples
