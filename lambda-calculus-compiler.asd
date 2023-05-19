@@ -2,6 +2,7 @@
 		:description "A lambda calculus compiler just for fun."
 		:author "Job Hernandez <hj93@protonmail.com>"
 		:version (:read-file-form "VERSION.txt")
+		:depends-on (#:hunchentoot #:com.inuoe.jzon)
 		:license "MIT License"
 		:around-compile (lambda (compile)
 				  (let (#+sbcl (sb-ext:*derive-function-types* t))
@@ -10,4 +11,5 @@
 		:pathname "src/"
 		:components
 		((:file "packages")
-		 (:file "compiler")))
+		 (:file "compiler")
+		 (:file "server")))
