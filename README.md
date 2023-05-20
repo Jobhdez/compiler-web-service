@@ -1,5 +1,5 @@
-# Scheme-to-Lambda-Calculus-Compiler web service
-a scheme to lambda calculus compiler just for fun.
+# Compiler web service
+Consists of two compilers: a Scheme to lambda calculus compiler and a Scheme to continuation passing style intermediate language. The backend is written in Common Lisp and the frontend is written in ReactJS.
 
 # Using the program
 1. Run `(ql:quickload :lambda-calculus-compiler)`. 
