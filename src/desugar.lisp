@@ -1,4 +1,4 @@
-(in-package #:manifold-scheme)
+(in-package #:cps-compiler)
 
 (defun desugar (ast)
   "Desugar the abstract syntax tree."
