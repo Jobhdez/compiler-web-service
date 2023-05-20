@@ -1,4 +1,4 @@
-(in-package #:manifold-scheme)
+(in-package #:cps-compiler)
 
 (defun cps (ast k)
   (match ast
