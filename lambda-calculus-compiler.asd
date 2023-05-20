@@ -13,6 +13,6 @@
 		((:file "packages")
 		 (:file "compiler")
 		 (:file "server")
-		 (:file "cpscompiler")
+		 (:file "cps")
 		 (:file "parser")
 		 (:file "desugar")))
