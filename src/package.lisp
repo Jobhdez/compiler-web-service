@@ -11,6 +11,7 @@
   (:use #:common-lisp
 	#:scheme-to-lambda-calculus
 	#:hunchentoot
-	#:com.inuoe.jzon
-	#:cps-compiler)
+	#:cps-compiler
+	#:com.inuoe.jzon)
+;	#:cl-json)
   (:export #:start-server))
