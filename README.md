@@ -2,7 +2,7 @@
 Consists of two compilers: a Scheme to lambda calculus compiler and a Scheme to continuation passing style intermediate language. The backend is written in Common Lisp and the frontend is written in ReactJS.
 
 # Using the program
-1. Run `(ql:quickload :lambda-calculus-compiler)`. 
+1. Run `(ql:quickload :lambda-web)`. 
 
 2. For this you need to clone this repo into a place SBCL can see -- i.e., `~/quicklisp/local-projects/`.
 
