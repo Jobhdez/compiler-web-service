@@ -2,7 +2,7 @@
 Consists of two compilers: a Scheme to lambda calculus compiler and a Scheme to continuation passing style intermediate language. The backend is written in Common Lisp and the frontend is written in ReactJS.
 
 # Installation and Loading
-This project depends on[JZON](https://github.com/Zulu-Inuoe/jzon), which is not on quicklisp, so:
+This project depends on [JZON](https://github.com/Zulu-Inuoe/jzon), which is not on quicklisp, so:
 
 1. Clone JZON to your ASDF/quicklisp directory (wherever SBCL knows to look -- i.e., `~/quicklisp/local-projects/`). 
 
@@ -26,6 +26,10 @@ This project depends on[JZON](https://github.com/Zulu-Inuoe/jzon), which is not 
 1. Move to this package: `(in-package :lambda-server)`.
 2. `(launch)` will start the server and open the app in your browser.
 
+## Running the React frontend app
+1. Move to `frontend` folder
+2. `npm start`
+3. 
 # Some Examples
 ```
 (compile-scheme '(if ltrue 1 1))
