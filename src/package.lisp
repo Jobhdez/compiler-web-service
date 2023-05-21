@@ -13,5 +13,10 @@
 	#:hunchentoot
 	#:cps-compiler
 	#:com.inuoe.jzon)
-;	#:cl-json)
-  (:export #:start-server))
+  (:export #:start-server
+	   #:stop-server
+	   #:*server*
+	   #:launch
+	   #:+format-string+
+	   #:open-browser
+	   #:launch))
