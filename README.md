@@ -1,14 +1,18 @@
 # Compiler web service
 Consists of two compilers: a Scheme to lambda calculus compiler and a Scheme to continuation passing style intermediate language. The backend is written in Common Lisp and the frontend is written in ReactJS.
 
-# Using the program
-1. Run `(ql:quickload :lambda-web)`. 
+# Installation and Loading
+This project depends on[JZON](https://github.com/Zulu-Inuoe/jzon), which is not on quicklisp, so:
 
-2. For this you need to clone this repo into a place SBCL can see -- i.e., `~/quicklisp/local-projects/`.
+1. Clone JZON to your ASDF/quicklisp directory (wherever SBCL knows to look -- i.e., `~/quicklisp/local-projects/`). 
+
+2. Clone this repo (compiler-web-service) to your ASDF/quicklisp directory. 
+
+3. Load the lambda-web system: `(ql:quickload :lambda-web)`. 
 
 ## Using the compiler
-4. Run `(in-package #:scheme-to-lambda-calculus)`
-5. Start the REPL: `(repl)`
+1. Move to this package: `(in-package #:scheme-to-lambda-calculus)`.
+2. Start the REPL: `(repl)`.
 
        λ> (if ltrue 1 1)
        
@@ -19,10 +23,8 @@ Consists of two compilers: a Scheme to lambda calculus compiler and a Scheme to 
           (LAMBDA NIL (LAMBDA (F) (LAMBDA (Z) (F Z)))))
           
 ## Using the web service
-1. `(in-package :lambda-server)`
-2. `(start-server)`
-3. In your browser point to `http://localhost:4243/compile?exp=(if (= 2 2) 2 3)`
-       
+1. Move to this package: `(in-package :lambda-server)`.
+2. `(launch)` will start the server and open the app in your browser.
 
 # Some Examples
 ```
