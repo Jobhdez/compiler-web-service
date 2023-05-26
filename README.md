@@ -1,5 +1,5 @@
 # Compiler web service
-Consists of two compilers: a Scheme to lambda calculus compiler and a Scheme to continuation passing style intermediate language. The backend is written in Common Lisp and the frontend is written in ReactJS.
+Consists of two compilers and two api end points: a Scheme to lambda calculus compiler and a Scheme to continuation passing style intermediate language. The backend is written in Common Lisp and the frontend is written in ReactJS.
 
 # Installation and Loading
 This project depends on [JZON](https://github.com/Zulu-Inuoe/jzon), which is not on quicklisp, so:
@@ -27,8 +27,8 @@ This project depends on [JZON](https://github.com/Zulu-Inuoe/jzon), which is not
 2. `(launch)` will start the server and open the app in your browser.
 
 ## Running the React frontend app
-1. Move to `frontend` folder
-2. `npm start`
+1. Move to `frontend` folder.
+2. `npm start`.
 3. While the Lisp server is running type an expression, e.g., `(if (= 1 1) 1 2)`, and see the compiled lambda calculus and cps code.
 
 
