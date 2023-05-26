@@ -29,7 +29,9 @@ This project depends on [JZON](https://github.com/Zulu-Inuoe/jzon), which is not
 ## Running the React frontend app
 1. Move to `frontend` folder
 2. `npm start`
-3. 
+3. While the Lisp server is running type an expression, e.g., `(if (= 1 1) 1 2)`, and see the compiled lambda calculus and cps code.
+
+
 # Some Examples
 ```
 (compile-scheme '(if ltrue 1 1))
