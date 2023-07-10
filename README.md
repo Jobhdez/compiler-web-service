@@ -26,6 +26,13 @@ This project depends on [JZON](https://github.com/Zulu-Inuoe/jzon), which is not
 1. Move to this package: `(in-package :lambda-server)`.
 2. `(launch)` will start the server and open the app in your browser.
 
+### Endpoints
+`/compile?exp=<exp>` will compile the given expression to the lambda calculus:
+             `http://localhost:4243/compile?exp=(if (= 2 2) 2 3)`
+
+ `/cps?exp=<exp>` will compile the given expression to continuation passing style:
+                    `http://localhost:4243/cps?exp=(if (= 2 2) 2 3)`
+
 ## Running the React frontend app
 1. Move to `frontend` folder.
 2. `npm start`.
