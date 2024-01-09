@@ -2,7 +2,7 @@
   :description "A compiler web explorer."
   :author "Job Hernandez <hj93@protonmail.com>"
   :version (:read-file-form "VERSION.txt")
-  :depends-on (#:alexa #:yacc #:alexandria #:hunchentoot #:trivia #:com.inuoe.jzon)
+  :depends-on (#:alexa #:yacc #:mito #:alexandria #:hunchentoot #:trivia #:com.inuoe.jzon)
   :license "MIT License"
   :around-compile (lambda (compile)
 		    (let (#+sbcl (sb-ext:*derive-function-types* t))
