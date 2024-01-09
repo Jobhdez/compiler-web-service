@@ -36,6 +36,19 @@
            +format-string+
            "http://localhost:4243/compile?exp=(if (= 2 2) 2 3)")))
 
+
+(define-easy-handler (scm :uri "/scm") ()
+  (setf (content-type*) "application/json")
+  (setf (header-out "Access-Control-Allow-Origin") *)
+  (setf *show-lisp-errors-p* t)
+  (let* ((exp (post-parameter "exp"))
+	 (table (make-hash-table :test 'equal))
+	 (e (read-from-string exp))
+	 (re (compile-scheme e)))
+    (setf (gethash 'expression table) (write-to-string re))
+    (stringify table)))
+	
+
 (defmacro define-route (url view-fn compile-fn ht)
   `(define-easy-handler (,view-fn :uri ,url) (exp)
      (setf (content-type*) "application/json")
