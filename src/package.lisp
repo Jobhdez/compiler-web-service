@@ -127,11 +127,14 @@
 	#:cps-compiler
 	#:zetta
 	#:yotta
-	#:com.inuoe.jzon)
+	#:com.inuoe.jzon
+	#:mito)
   (:export #:start-server
 	   #:stop-server
 	   #:*server*
 	   #:launch
+	   #:connect-to-postgres
+	   #:ensure-tables
 	   #:+format-string+
 	   #:open-browser
 	   #:launch))
