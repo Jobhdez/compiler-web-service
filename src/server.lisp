@@ -101,7 +101,7 @@
            (setf (gethash 'response table) "Expressions Created!")
            (stringify table))
 	(progn
-	  (setf (gethash 'respons table2) "Must Be Logged in")
+	  (setf (gethash 'response table2) "Must Be Logged in")
 	  (stringify table2)))))
 	      
 	    
