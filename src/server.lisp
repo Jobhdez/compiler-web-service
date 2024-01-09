@@ -44,6 +44,8 @@
 :weakness nil
 :synchronized nil))
 
+(setf auth-map (make-hash-table :test #'equal))
+
 (define-easy-handler (hello :uri "/hello") ()
   (format nil 
 "<h4>hello</h4>"))
@@ -80,6 +82,27 @@
      
 	 
 
+(define-easy-handler (scmlamtwo :uri "/scmlamtwo") ()
+   (setf (content-type*) "application/json")
+  (setf (header-out "Access-Control-Allow-Origin") *)
+  (setf *show-lisp-errors-p* t)
+
+  (let* ((username (post-parameter "user"))
+         (exp (post-parameter "exp"))
+	 (name (post-parameter "name"))
+	 (email (post-parameter "email"))
+	 (e (read-from-string exp))
+	 (er (compile-scheme e))
+	 (table (make-hash-table :test 'equal))
+	 (table2 (make-hash-table :test 'equal)))
+    (if (gethash username auth-map)
+	(progn
+           (create-dao 'scm-lambda-exp :exp exp :user (find-dao 'user :username username) :eval-exp (write-to-string er))
+           (setf (gethash 'response table) "Expressions Created!")
+           (stringify table))
+	(progn
+	  (setf (gethash 'respons table2) "Must Be Logged in")
+	  (stringify table2)))))
 	      
 	    
 
@@ -163,15 +186,19 @@ pass:<br><input type=\"password\" name=\"pass\" /><br>
                         (progn
                            (hunchentoot:start-session)
                            (setf (hunchentoot:session-value :user) the-user)
-                           (hunchentoot:redirect "/?info=you-had-sign-in"))
+			   (setf (gethash the-user auth-map) the-user)
+                           (hunchentoot:redirect "/?info=you-have-sign-in"))
                         (hunchentoot:redirect "/sign-in?info=password-error")))
                (hunchentoot:redirect "/sign-in?info=input-error"))))
 
 ;;sign-out------
 (hunchentoot:define-easy-handler (sign-out :uri "/sign-out") ()
-   (setf (hunchentoot:content-type*) "text/plain")
+  (setf (hunchentoot:content-type*) "text/plain")
+  (let ((the-user (session-value :user)))
+    (progn
       (hunchentoot:remove-session hunchentoot:*session*)
-         (hunchentoot:redirect  "/?info=you-had-sign-out"))
+      (remhash the-user auth-map)
+      (hunchentoot:redirect  "/?info=you-had-sign-out"))))
 
 (defun compile-cps (e)
   (cps (desugar (parse-exp e)) 'halt))
