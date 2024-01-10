@@ -10,7 +10,45 @@ This project depends on [JZON](https://github.com/Zulu-Inuoe/jzon), which is not
 
 3. Load the lambda-web system: `(ql:quickload :lambda-web)`. 
 
-## Using the compiler
+# Using the web service
+## Endpoints
+### GET
+The following return a listing of all compiled of pairs of expressions and compiled expressions:
+
+```
+http://localhost:4243/scm-exps
+http://localhost:4243/cps-exps
+http://localhost:4243/lalg-exps
+http://localhost:4243/py-exps
+```
+The following return a detailed exp,compiled exp pair:
+
+```
+http://localhost:4243/scm-exp
+http://localhost:4243/cps-exp
+http://localhost:4243/lalg-exp
+http://localhost:4243/py-exp
+```
+
+### POST
+The following creates an entry in the database:
+
+```
+http://localhost:4243/scm-compilations
+http://localhost:4243/cps-compilations
+http://localhost:4243/lalg-compilations
+http://localhost:4243/py-compilations
+```
+
+The following returns a the compiled expression:
+
+```
+http://localhost:4243/compiled-scm-exps
+http://localhost:4243/compiled-cps-exps
+http://localhost:4243/compiled-lalg-exps
+http://localhost:4243/compiled-py-exps
+```
+## Using the Scheme to lambda calculus  compiler
 1. Move to this package: `(in-package #:scheme-to-lambda-calculus)`.
 2. Start the REPL: `(repl)`.
 
@@ -22,22 +60,13 @@ This project depends on [JZON](https://github.com/Zulu-Inuoe/jzon), which is not
            (LAMBDA NIL (LAMBDA (F) (LAMBDA (Z) (F Z)))))
           (LAMBDA NIL (LAMBDA (F) (LAMBDA (Z) (F Z)))))
           
-## Using the web service
-1. Move to this package: `(in-package :lambda-server)`.
-2. `(launch)` will start the server and open the app in your browser.
 
-### Endpoints
-`/compile?exp=<exp>` will compile the given expression to the lambda calculus:
-             `http://localhost:4243/compile?exp=(if (= 2 2) 2 3)`
-
- `/cps?exp=<exp>` will compile the given expression to continuation passing style:
-                    `http://localhost:4243/cps?exp=(if (= 2 2) 2 3)`
-
-## Running the React frontend app
+# Running the React frontend app
 1. Move to `frontend` folder.
 2. `npm start`.
 3. While the Lisp server is running type an expression, e.g., `(if (= 1 1) 1 2)`, and see the compiled lambda calculus and cps code.
 
+note: This React frontend does not work
 
 # Some Examples
 ```
@@ -162,6 +191,3 @@ This project depends on [JZON](https://github.com/Zulu-Inuoe/jzon), which is not
          N)
         (LAMBDA (F) (LAMBDA (Z) (F Z)))))))))))
 ```
-
-# Acknowledgement
-This tiny compiler is based on the one [compiler](https://matt.might.net/articles/compiling-up-to-lambda-calculus/) by Dr. Might. This tiny compiler, so far, it is just a re-write of his.
