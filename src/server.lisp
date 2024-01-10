@@ -62,67 +62,58 @@
     (stringify table)))
 
 
-(define-easy-handler (scmlam :uri "/scmlam") ()
-  (setf (content-type*) "application/json")
-  (setf (header-out "Access-Control-Allow-Origin") *)
-  (setf *show-lisp-errors-p* t)
+(defmacro define-exp (fn uri table compilation-fn)
+  `(define-easy-handler (,fn :uri ,uri) ()
+     (setf (content-type*) "application/json")
+     (setf (header-out "Access-Control-Allow-Origin") *)
+     (setf *show-lisp-errors-p* t)
 
-  (let* ((username (post-parameter "user"))
-         (exp (post-parameter "exp"))
-	 (name (post-parameter "name"))
-	 (email (post-parameter "email"))
-	 (e (read-from-string exp))
-	 (er (compile-scheme e))
-	 (table (make-hash-table :test 'equal)))
-    (progn
-      (create-dao 'user :name name :username username :email email)
-      (create-dao 'scm-lambda-exp :exp exp :user (find-dao 'user :username username) :eval-exp (write-to-string er))
-      (setf (gethash 'response table) "Expressions Created!")
-      (stringify table))))
+     (let* ((username (post-parameter "user"))
+            (exp (post-parameter "exp"))
+	    (e (read-from-string exp))
+	    (er (,compilation-fn e))
+	    (htable (make-hash-table :test 'equal))
+	    (htable2 (make-hash-table :test 'equal)))
+       (if (gethash username auth-map)
+	   (progn
+             (create-dao ',table :exp exp :user (find-dao 'user :username username) :eval-exp (write-to-string er))
+             (setf (gethash 'response htable) "Expressions Created!")
+             (stringify htable))
+	   (progn
+	     (setf (gethash 'response htable2) "Must Be Logged in")
+	     (stringify htable2))))))
 
+(define-exp compiled-scm-exp "/compiled-scm-exps" scm-lambda-exp compile-scheme)
 
-
-(define-easy-handler (scmlamtwo :uri "/scmlamtwo") ()
-  (setf (content-type*) "application/json")
-  (setf (header-out "Access-Control-Allow-Origin") *)
-  (setf *show-lisp-errors-p* t)
-
-  (let* ((username (post-parameter "user"))
-         (exp (post-parameter "exp"))
-	 (name (post-parameter "name"))
-	 (email (post-parameter "email"))
-	 (e (read-from-string exp))
-	 (er (compile-scheme e))
-	 (table (make-hash-table :test 'equal))
-	 (table2 (make-hash-table :test 'equal)))
-    (if (gethash username auth-map)
-	(progn
-          (create-dao 'scm-lambda-exp :exp exp :user (find-dao 'user :username username) :eval-exp (write-to-string er))
-          (setf (gethash 'response table) "Expressions Created!")
-          (stringify table))
-	(progn
-	  (setf (gethash 'response table2) "Must Be Logged in")
-	  (stringify table2)))))
-
-(define-easy-handler (scm-exps :uri "/scm-exps") ()
-  (setf (content-type*) "application/json")
-  (setf (header-out "Access-Control-Allow-Origin") "*")
-  (setf *show-lisp-errors-p* t)
-  (stringify (select-dao 'scm-lambda-exp)))
-
-
-(defmacro define-route (url view-fn compile-fn ht)
-  `(define-easy-handler (,view-fn :uri ,url) (exp)
+(defmacro define-listing (fn uri table)
+  `(define-easy-handler (,fn :uri ,uri) ()
      (setf (content-type*) "application/json")
      (setf (header-out "Access-Control-Allow-Origin") "*")
      (setf *show-lisp-errors-p* t)
-     (let* ((,ht (make-hash-table :test 'equal))
-	    (e (list (read-from-string exp)))
-	    (e2 `(,e))
-	    (e3 (car (car e2)))
-	    (expr (,compile-fn e3)))
-       (setf (gethash 'expression ,ht) (write-to-string expr))
-       (stringify ,ht))))
+     (stringify (select-dao ',table))))
+
+(defmacro define-exp-detail (fn uri table)
+  `(define-easy-handler (,fn :uri ,uri) (id)
+     (setf (content-type*) "application/json")
+     (setf (header-out "Access-Control-Allow-Origin") "*")
+     (setf *show-lisp-errors-p* t)
+     (let ((htable (make-hash-table :test 'equal))
+	   (exp (find-dao ',table :id id)))
+       (setf (gethash 'detail htable) exp)
+       (stringify htable))))
+
+
+(define-listing scm-exps "/scm-exps" scm-lambda-exp)
+(define-listing cps-exps "/cps-exps" cps-exp)
+(define-listing lalg-exp "/lalg-exps" lalg-exp)
+(define-listing users "/users" user)
+(define-listing py-exps "/py-exps" py-exp)
+
+(define-exp-detail scm-exp "/scm-exp" scm-lambda-exp)
+(define-exp-detail cps-exps "/cps-exp" cps-exp)
+(define-exp-detail lalg-exp "/lalg-exp" lalg-exp)
+(define-exp-detail py-exps "/py-exps" py-exp)
+
 
 
 ;;index------
