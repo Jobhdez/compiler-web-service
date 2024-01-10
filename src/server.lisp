@@ -208,9 +208,6 @@ pass:<br><input type=\"password\" name=\"pass\" /><br>
 (defun compile-cps (e)
   (cps (desugar (parse-exp e)) 'halt))
 
-(define-route "/compile" comp compile-scheme ht)
-(define-route "/cps" cps* compile-cps cpsht)
-
 
 
 
