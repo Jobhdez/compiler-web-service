@@ -82,7 +82,7 @@
 (define-exp-detail scm-exp "/scm-exp" scm-lambda-exp)
 (define-exp-detail cps-exp "/cps-exp" cps-exp)
 (define-exp-detail lalg-exp "/lalg-exp" lalg-exp)
-(define-exp-detail py-exp "/py-exps" py-exp)
+(define-exp-detail py-exp "/py-exp" py-exp)
 
 (define-compilation scm "/scm-compilations" scm-lambda-exp compile-scheme)
 
