@@ -12,6 +12,9 @@
   :components
   ((:file "package")
    (:file "server")
+   (:file "compilation-functions")
+   (:file "database")
+   (:file "handlers")
    (:module "cpscompiler"
     :components
     ((:file "parser")
