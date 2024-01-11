@@ -34,7 +34,6 @@ The following creates an entry in the database:
 ```
 http://localhost:4243/scm-compilations
 http://localhost:4243/cps-compilations
-http://localhost:4243/lalg-compilations
 http://localhost:4243/py-compilations
 ```
 
