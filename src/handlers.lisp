@@ -14,7 +14,7 @@
 
 ;;; == macros for handlers ==
 
-(defmacro define-compilation (fn uri table compilation-fn)
+(defmacro define-compilation (fn uri table compilation-fn fn*)
   `(define-easy-handler (,fn :uri ,uri) ()
      (setf (content-type*) "application/json")
      (setf (header-out "Access-Control-Allow-Origin") *)
@@ -22,7 +22,7 @@
      (let* ((exp (post-parameter "exp"))
 	    (username (post-parameter "user"))
 	    (htable (make-hash-table :test 'equal))
-	    (e (read-from-string exp))
+	    (e (,fn* exp))
 	    (re (,compilation-fn e))
 	    (htable2 (make-hash-table :test 'equal)))
 	    (if (find-dao 'user :username username)
@@ -60,7 +60,7 @@
      (setf (header-out "Access-Control-Allow-Origin") "*")
      (setf *show-lisp-errors-p* t)
      (stringify (select-dao ',table))))
-
+http://localhost:4243
 (defmacro define-exp-detail (fn uri table)
   `(define-easy-handler (,fn :uri ,uri) (id)
      (setf (content-type*) "application/json")
@@ -84,7 +84,10 @@
 (define-exp-detail lalg-exp "/lalg-exp" lalg-exp)
 (define-exp-detail py-exp "/py-exp" py-exp)
 
-(define-compilation scm "/scm-compilations" scm-lambda-exp compile-scheme)
+(define-compilation scm "/scm-compilations" scm-lambda-exp compile-scheme read-str)
+(define-compilation cps "/cps-compilations" cps-exp compile-cps read-str)
+(define-compilation py "/py-compilations" py-exp compile-zetta identity*)
+(define-compilation lalg "/lalg-compilations" lalg-exp compile-yotta identity*)
 
 (define-exp compiled-scm-exp "/compiled-scm-exps" scm-lambda-exp compile-scheme read-str)
 (define-exp compiled-cps-exp "/compiled-cps-exps" cps-exp compile-cps read-str)
