@@ -31,20 +31,5 @@
      (:file "expose-allocation")
      (:file "remove-complex-operands")
      (:file "select-instructions")
-     (:file "assign-homes")))
-   (:module "lalg-compiler"
-	    :components 
-	    ((:file "lalglexer")
-	     (:file "lalgast")
-	     (:file "lalgparser")
-	     (:module "lisp"
-		      :components
-		      ((:file "lispast")
-		       (:file "lispIL")
-		       (:file "generatelisp")))
-	     (:module "c"
-		      :components
-		      ((:file "cast")
-		       (:file "c-intermediate-language")
-		       (:file "compile-to-c")))))))
+     (:file "assign-homes")))))
 	    
