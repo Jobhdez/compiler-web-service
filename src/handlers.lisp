@@ -89,6 +89,7 @@
 (define-exp compiled-scm-exp "/compiled-scm-exps" scm-lambda-exp compile-scheme read-str)
 (define-exp compiled-cps-exp "/compiled-cps-exps" cps-exp compile-cps read-str)
 (define-exp compiled-zetta-exp "/compiled-py-exps" py-exp compile-zetta identity*)
+(define-exp compiled-yotta-lalg "/compiled-lalg-exps" lalg-exp compile-yotta identity*)
 
 
 (hunchentoot:define-easy-handler (index :uri "/") (info)
