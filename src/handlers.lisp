@@ -33,7 +33,7 @@
 		       (stringify htable2))))))
 
 
-(defmacro define-exp (fn uri table compilation-fn)
+(defmacro define-exp (fn uri table compilation-fn fn*)
   `(define-easy-handler (,fn :uri ,uri) ()
      (setf (content-type*) "application/json")
      (setf (header-out "Access-Control-Allow-Origin") *)
@@ -41,7 +41,7 @@
 
      (let* ((username (post-parameter "user"))
             (exp (post-parameter "exp"))
-	    (e (read-from-string exp))
+	    (e (,fn* exp))
 	    (er (,compilation-fn e))
 	    (htable (make-hash-table :test 'equal))
 	    (htable2 (make-hash-table :test 'equal)))
@@ -86,7 +86,10 @@
 
 (define-compilation scm "/scm-compilations" scm-lambda-exp compile-scheme)
 
-(define-exp compiled-scm-exp "/compiled-scm-exps" scm-lambda-exp compile-scheme)
+(define-exp compiled-scm-exp "/compiled-scm-exps" scm-lambda-exp compile-scheme read-str)
+(define-exp compiled-cps-exp "/compiled-cps-exps" cps-exp compile-cps read-str)
+(define-exp compiled-zetta-exp "/compiled-py-exps" py-exp compile-zetta identity*)
+
 
 (hunchentoot:define-easy-handler (index :uri "/") (info)
   (setf (hunchentoot:content-type*) "text/html")
