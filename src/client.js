@@ -1,9 +1,9 @@
-function compiledScmExps() {
+function compiledExps(username, expr, endpoint) {
     var data = new URLSearchParams();
-    data.append("user", "koi2");
-    data.append("exp", "(if ltrue 1 2)");
+    data.append("user", username);
+    data.append("exp", expr);
 
-    fetch('http://localhost:4243/scm-compilations', {
+    fetch(endpoint, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -20,4 +20,38 @@ function compiledScmExps() {
     });
 }
 
-compiledScmExps();
+function compiledExpListing(endpoint) {
+
+    fetch(endpoint, {
+	method: 'GET',
+	headers: {
+	    'Content-Type': 'application/x-www/form-urlencoded'
+	}})
+	.then(response => response.json())
+	.then(data => {
+	    console.log(JSON.stringify(data))
+	}).catch(error => {
+	    console.error("Error", error)})}
+
+function compiledExpDetail(id, endpoint) {
+    var endpoint = endpoint.concat(id.toString())
+    fetch(endpoint, {
+	method: 'GET',
+	headers: {
+	    'Content-Type': 'application/x-www/form-urlencoded'
+	}})
+	.then(response => response.json())
+	.then(data => {
+	    console.log(JSON.stringify(data))
+	}).catch(error => {
+	    console.error("Error", error)})}
+
+/*
+  == Examples ==
+  
+compiledExps("koi2", "(if ltrue 2 3)", "http://localhost:4243/scm-compilations")
+
+compiledExpListing("http://localhost:4243/scm-exps")
+*/
+
+compiledExpDetail(3, "http://localhost:4243/scm-exp?id=")
