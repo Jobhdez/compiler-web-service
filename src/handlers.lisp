@@ -160,7 +160,11 @@
 <p>user:~A</p>
 <a href=\"/sign-up\">click-here-to-sign-up</a><br>
 <a href=\"/sign-in\">click-here-to-sign-in</a><br>
-<a href=\"/sign-out\">click-here-to-sign-out</a><br>" info the-user)))
+<a href=\"/sign-out\">click-here-to-sign-out</a><br>
+<a href=\"compile-scm\">click-here-to-use-the-scheme-to-lambda-calculus-compiler</a><br>
+<a href=\"compile-cps\">click-here-to-use-the-scheme-to-continuation-passing-style-compiler</a><br>
+<a href=\"compile-py\">click-here-to-use-the-python-x86-compiler</a><br>
+<a href=\"compile-lalg\">click-here-to-use-the-lalg-compiler</a><br>" info the-user)))
 
 ;;sign-up------
 (hunchentoot:define-easy-handler (sign-up :uri "/sign-up") (info)
