@@ -94,10 +94,11 @@
 (define-exp compiled-zetta-exp "/compiled-py-exps" py-exp compile-zetta identity*)
 (define-exp compiled-yotta-lalg "/compiled-lalg-exps" lalg-exp compile-yotta identity*)
 
-(define-easy-handler (compile-scm :uri "/compile-scm") ()
-  (setf (content-type*) "text/html")
-  (format nil
-       "<head>
+(defmacro define-compile-expression (fn-name uri endpoint)
+  `(define-easy-handler (,fn-name :uri ,uri) ()
+    (setf (content-type*) "text/html")
+    (format nil
+	    "<head>
     <meta charset=\"UTF-8\">
     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
     <title>Expression Evaluator</title>
@@ -111,7 +112,7 @@
     <label for=\"userInput\">Enter User:</label>
     <input type=\"text\" id=\"userInput\" placeholder=\"compiler\">
     
-    <button onclick=\"sendRequest()\">Evaluate Expression</button>
+    <button onclick=\"sendRequest()\">Compile Expression</button>
     
     <div id=\"response\"></div>
 
@@ -126,7 +127,7 @@
             data.append(\"exp\", expression);
 
             // Make POST request
-            fetch('http://localhost:4243/scm-compilations', {
+            fetch('~A', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -143,8 +144,12 @@
             });
         }
     </script>
-   </body>"))
+   </body>" ,endpoint)))
 
+(define-compile-expression compile-scm "/compile-scm" "http://localhost:4243/scm-compilations")
+(define-compile-expression compile-cps "/compile-cps" "http://localhost:4243/cps-compilations")
+(define-compile-expression compile-lalg "/compile-lalg" "http://localhost:4243/lalg-compilations")
+(define-compile-expression compile-py "/compile-py" "http://localhost:4243/py-compilations")
 
 (hunchentoot:define-easy-handler (index :uri "/") (info)
   (setf (hunchentoot:content-type*) "text/html")
