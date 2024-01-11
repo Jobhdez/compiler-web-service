@@ -16,33 +16,32 @@
   (:export #:select-instructions
 	   #:remove-complex-operands
 	   #:assign-homes
-	   #:parse-with-lexer
-	   #:token-generator
-	   #:lex-line
 	   #:*python-grammar*
+	   #:lex-line
+	   #:token-generator
 	   #:clean
-
-	   #:make-instruction
-	   #:make-atomic-var
-	   #:make-immediate
-	   #:make-callq
-	   #:make-py-module
-	   #:make-py-sum
-	   #:make-atomic-sum
-	   #:make-py-cmp
-	   #:make-py-if
-	   #:make-if-atomic
-	   #:make-py-neg-num
-	   #:make-py-assignment
-	   #:make-py-print
-	   #:make-py-neg-num
-	   #:make-py-constant
-	   #:make-py-print
-	   #:make-py-var
-	   #:make-atomic-assignment
-	   #:make-py-constant))
+	   #:parse-with-lexer))
 
 (defpackage #:zetta-var
+  (:use))
+
+(defpackage #:yotta
+  (:use #:common-lisp
+	#:alexa
+	#:yacc
+	#:alexandria
+	#:trivia)
+  (:export #:make-lisp-interlan
+	   #:*linear-algebra-grammar*
+	   #:make-lisp-interlan
+	   #:make-c-interlan
+	   #:generate-lisp
+	   #:compile-to-c
+	   #:token-generator*
+	   #:lex-line*)
+  (:shadow #:parse-with-lexer))
+  
+(defpackage #:yotta-var
   (:use))
 
 (defpackage #:lambda-server
@@ -51,6 +50,7 @@
 	#:hunchentoot
 	#:cps-compiler
 	#:zetta
+	#:yotta
 	#:com.inuoe.jzon
 	#:mito)
   (:export #:start-server
@@ -61,5 +61,7 @@
 	   #:ensure-tables
 	   #:+format-string+
 	   #:open-browser
-	   #:launch))
+	   #:launch
+	   #:compile-zetta
+	   #:compile-yotta))
 
