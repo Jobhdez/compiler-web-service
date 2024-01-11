@@ -18,7 +18,6 @@ The following return a listing of all compiled of pairs of expressions and compi
 ```
 http://localhost:4243/scm-exps
 http://localhost:4243/cps-exps
-http://localhost:4243/lalg-exps
 http://localhost:4243/py-exps
 ```
 The following return a detailed exp,compiled exp pair:
@@ -26,7 +25,6 @@ The following return a detailed exp,compiled exp pair:
 ```
 http://localhost:4243/scm-exp
 http://localhost:4243/cps-exp
-http://localhost:4243/lalg-exp
 http://localhost:4243/py-exp
 ```
 
@@ -45,7 +43,6 @@ The following returns a the compiled expression:
 ```
 http://localhost:4243/compiled-scm-exps
 http://localhost:4243/compiled-cps-exps
-http://localhost:4243/compiled-lalg-exps
 http://localhost:4243/compiled-py-exps
 ```
 ## Using the Scheme to lambda calculus  compiler
