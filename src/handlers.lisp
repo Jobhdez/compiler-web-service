@@ -60,7 +60,7 @@
      (setf (header-out "Access-Control-Allow-Origin") "*")
      (setf *show-lisp-errors-p* t)
      (stringify (select-dao ',table))))
-http://localhost:4243
+
 (defmacro define-exp-detail (fn uri table)
   `(define-easy-handler (,fn :uri ,uri) (id)
      (setf (content-type*) "application/json")
