@@ -60,7 +60,7 @@
      (setf (header-out "Access-Control-Allow-Origin") "*")
      (setf *show-lisp-errors-p* t)
      (stringify (select-dao ',table))))
-http://localhost:4243
+
 (defmacro define-exp-detail (fn uri table)
   `(define-easy-handler (,fn :uri ,uri) (id)
      (setf (content-type*) "application/json")
@@ -93,6 +93,57 @@ http://localhost:4243
 (define-exp compiled-cps-exp "/compiled-cps-exps" cps-exp compile-cps read-str)
 (define-exp compiled-zetta-exp "/compiled-py-exps" py-exp compile-zetta identity*)
 (define-exp compiled-yotta-lalg "/compiled-lalg-exps" lalg-exp compile-yotta identity*)
+
+(define-easy-handler (compile-scm :uri "/compile-scm") ()
+  (setf (content-type*) "text/html")
+  (format nil
+       "<head>
+    <meta charset=\"UTF-8\">
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+    <title>Expression Evaluator</title>
+</head>
+<body>
+    <h2>Compiled Expression</h2>
+    
+    <label for=\"expressionInput\">Enter Expression:</label>
+    <input type=\"text\" id=\"expressionInput\" placeholder=\"(if ltrue 2 3)\">
+    
+    <label for=\"userInput\">Enter User:</label>
+    <input type=\"text\" id=\"userInput\" placeholder=\"compiler\">
+    
+    <button onclick=\"sendRequest()\">Evaluate Expression</button>
+    
+    <div id=\"response\"></div>
+
+    <script>
+        function sendRequest() {
+            // Get values from input fields
+            var expression = document.getElementById(\"expressionInput\").value;
+            var user = document.getElementById(\"userInput\").value;
+            // Create data object for POST request
+            var data = new URLSearchParams();
+            data.append(\"user\", user);
+            data.append(\"exp\", expression);
+
+            // Make POST request
+            fetch('http://localhost:4243/scm-compilations', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: data.toString()
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display server response
+                document.getElementById(\"response\").innerHTML = 'Compiled Expression: ' + JSON.stringify(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+   </body>"))
 
 
 (hunchentoot:define-easy-handler (index :uri "/") (info)
