@@ -1,5 +1,6 @@
 # Compiler web service
-Consists of two compilers and two api end points: a Scheme to lambda calculus compiler and a Scheme to continuation passing style intermediate language. The backend is written in Common Lisp and the frontend is written in ReactJS.
+This backend consists of 4 compilers
+the most substantial of which is a "Python" to x86 AST.
 
 # Installation and Loading
 This project depends on [JZON](https://github.com/Zulu-Inuoe/jzon), which is not on quicklisp, so:
