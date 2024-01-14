@@ -68,7 +68,7 @@ function Home() {
 		return response.json()
             })
             .then(data => {
-		// Display server response
+	
 		setCompiledCode(JSON.stringify(data.expression))
             })
             .catch(error => {
@@ -140,10 +140,6 @@ function Home() {
 		    value={CompiledCode}
 		    readOnly
 		/>
-	    </div>
-         
-        
-        
         </div>
     )
 }
