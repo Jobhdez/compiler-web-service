@@ -127,9 +127,10 @@ function Home() {
 		</Grid>
 	    </Grid>
 	    
-	    <Editor height="calc(50vh - 25px)" theme="vs-dark" onChange={(val) => {setExpCode(val)}}/>
+	    <Editor height="calc(50vh - 25px)" width='50%' theme="vs-dark" onChange={(val) => {setExpCode(val)}}/>
 	    <button onClick={Compile}>compile</button>
-	    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh', width: '50%'}}>
+
+	   <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh', width: '50%'}}>
 		<TextField
 		    id="outlined-multiline-static"
 		    label="Compiled Code"
@@ -141,7 +142,7 @@ function Home() {
 		    readOnly
 		/>
             </div>
+	    
 	</div>
-    )
-}
+    )}
 export default Home;
