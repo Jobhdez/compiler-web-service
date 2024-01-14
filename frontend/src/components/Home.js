@@ -6,6 +6,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
 
 const lispUrl = "http://localhost:4243/"
 
@@ -79,67 +80,70 @@ function Home() {
     return (
 	
 	<div>
-            <div>
-		<Button
-                    id="basic-button"
-                    aria-controls={open ? 'basic-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                    onClick={handleClick}
-		>
-                    Pick your compiler
-		</Button>
-		<Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    MenuListProps={{
-			'aria-labelledby': 'basic-button',
-                    }}
-		>
-                    <MenuItem onClick={CpsHandle}>CPS Compiler</MenuItem>
-                    <MenuItem onClick={ScmHandle}>Scheme to Lambda compiler</MenuItem>
-                    <MenuItem onClick={PyHandle}>Py compiler</MenuItem>
-                    <MenuItem onClick={LalgHandle}> Lalg Compiler</MenuItem>
-		</Menu>
-            </div>
-            <Box
-		component="form"
-		sx={{
-		    '& > :not(style)': { m: 1, width: '25ch' },
-		}}
-		noValidate
-		autoComplete="off"
-            >
+            <Grid container spacing={2}>
+		<Grid item>
+		    <Button
+			id="basic-button"
+			aria-controls={open ? 'basic-menu' : undefined}
+			aria-haspopup="true"
+			aria-expanded={open ? 'true' : undefined}
+			onClick={handleClick}
+		    >
+			Pick your compiler
+		    </Button>
+		    <Menu
+			id="basic-menu"
+			anchorEl={anchorEl}
+			open={open}
+			onClose={handleClose}
+			MenuListProps={{
+			    'aria-labelledby': 'basic-button',
+			}}
+		    >
+			<MenuItem onClick={CpsHandle}>CPS Compiler</MenuItem>
+			<MenuItem onClick={ScmHandle}>Scheme to Lambda compiler</MenuItem>
+			<MenuItem onClick={PyHandle}>Py compiler</MenuItem>
+			<MenuItem onClick={LalgHandle}> Lalg Compiler</MenuItem>
+		    </Menu>
+		</Grid>
+		<Grid item>
+		    <Box
+			component="form"
+			sx={{
+			    '& > :not(style)': { m: 1, width: '25ch' },
+			}}
+			noValidate
+			autoComplete="off"
+		    >
+			<TextField
+			    id="outlined-controlled"
+			    label="Username"
+			    value={user}
+			    onChange={(event) => {
+				setUser(event.target.value);
+			    }}
+			/>
+		    </Box>
+		</Grid>
+	    </Grid>
+	    
+	    <Editor height="calc(50vh - 25px)" theme="vs-dark" onChange={(val) => {setExpCode(val)}}/>
+	    <button onClick={Compile}>compile</button>
+	    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh', width: '50%'}}>
 		<TextField
-		    id="outlined-controlled"
-		    label="Username"
-		    value={user}
-		    onChange={(event) => {
-			setUser(event.target.value);
-		    }}
+		    id="outlined-multiline-static"
+		    label="Compiled Code"
+		    multiline
+		    fullWidth
+		    rows={10} // Adjust the number of rows as needed
+		    variant="outlined"
+		    value={CompiledCode}
+		    readOnly
 		/>
-            </Box>
-            <div>
-		
-		<Editor height="calc(50vh - 25px)" theme="vs-dark" onChange={(val) => {setExpCode(val)}}/>
-		<button onClick={Compile}>compile</button>
-		<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh', width: '50%'}}>
-		    <TextField
-			id="outlined-multiline-static"
-			label="Compiled Code"
-			multiline
-			fullWidth
-			rows={10} // Adjust the number of rows as needed
-			variant="outlined"
-			value={CompiledCode}
-			readOnly
-		    />
-		</div>
-            </div>  
-            
-            
+	    </div>
+         
+        
+        
         </div>
     )
 }
