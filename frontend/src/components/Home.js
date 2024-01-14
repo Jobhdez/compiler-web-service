@@ -1,48 +1,131 @@
+import React from 'react';
 import { useState } from 'react';
 import Editor from "@monaco-editor/react";
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 
-const lambdaUrl = "http://localhost:4243/compile?exp=";
-const cpsUrl = "http://localhost:4243/cps?exp="
+const lispUrl = "http://localhost:4243/"
 
 function Home() {
-    const [lambdaCode, setLambdaCode] = useState("");
-    const [cpsCode, setCpsCode] = useState("")
-    const [lambdaCompiledCode, setLambdaCompiledCode] = useState("")
-    const [cpsCompiledCode, setCpsCompiledCode] = useState("")
+    const [ExpCode, setExpCode] = useState("");
+    const [CompiledCode, setCompiledCode] = useState("")
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [url, setUrl] = React.useState("")
+    const [user, setUser] = React.useState("")
+    const handleClose = () => {
+        setAnchorEl(null);
+      };
+    const open = Boolean(anchorEl);
 
-    const lambdaCompile = () => {
-        fetch(lambdaUrl+lambdaCode).then((response) => response.json()).then((data)=> {setLambdaCompiledCode(data.expression)})
-        console.log(lambdaCompiledCode)
-        }
- 
-    const cpsCompile = async () => {
-        fetch(cpsUrl+cpsCode).then((response) => response.json()).then((data)=>{setCpsCompiledCode(data.expression)})
-        }
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+  };
+
+    const CpsHandle = () => {
+        setUrl("cps-compilations")
+        setAnchorEl(null)
+    }
+
+    const ScmHandle = () => {
+        setUrl("scm-compilations")
+        setAnchorEl(null)
+    }
+
+    const PyHandle = () => {
+        setUrl("py-compilations")
+        setAnchorEl(null)
+    }
+
+    const LalgHandle = () => {
+        setUrl("lalg-compilations")
+        setAnchorEl(null)
+    }
+
+
+    function Compile() {
+        var data = new URLSearchParams();
+        data.append("user", user);
+        data.append("exp", ExpCode);
+        console.log(typeof user)
+        console.log(typeof ExpCode)
+        fetch(lispUrl+url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: data,
+            mode: 'no-cors'
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Display server response
+            console.log(JSON.stringify(data))
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
     
-    console.log(lambdaCode)
-    console.log(lambdaUrl+lambdaCode)
+
     return (
     
     <div>
         <div>
+            <Button
+                id="basic-button"
+                aria-controls={open ? 'basic-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                onClick={handleClick}
+            >
+                Pick your compiler
+            </Button>
+            <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                'aria-labelledby': 'basic-button',
+                }}
+            >
+                <MenuItem onClick={CpsHandle}>CPS Compiler</MenuItem>
+                <MenuItem onClick={ScmHandle}>Scheme to Lambda compiler</MenuItem>
+                <MenuItem onClick={PyHandle}>Py compiler</MenuItem>
+                <MenuItem onClick={LalgHandle}> Lalg Compiler</MenuItem>
+            </Menu>
+        </div>
+            <Box
+        component="form"
+        sx={{
+            '& > :not(style)': { m: 1, width: '25ch' },
+        }}
+        noValidate
+        autoComplete="off"
+        >
+        <TextField
+            id="outlined-controlled"
+            label="Username"
+            value={user}
+            onChange={(event) => {
+            setUser(event.target.value);
+            }}
+        />
+        </Box>
+        <div>
             
-            <Editor height="calc(50vh - 25px)" theme="vs-dark" onChange={(val) => {setLambdaCode(val)}}/>
-            <button onClick={lambdaCompile}> compile</button>
+            <Editor height="calc(50vh - 25px)" theme="vs-dark" onChange={(val) => {setExpCode(val)}}/>
+            <button onClick={Compile}>compile</button>
             <div>
-                <pre>{lambdaCompiledCode}</pre>
+                <pre>{CompiledCode}</pre>
             </div>
         </div>  
-        
-            <div>
-                 <Editor height="calc(50vh - 25px)" theme="vs-dark" onChange={(val) => {setCpsCode(val)}}/>
-                 <button onClick={cpsCompile}> compile</button>
-                 <div>
-                    <pre>{cpsCompiledCode}</pre>
-                </div>
-            </div>
             
             
         </div>
     )
-}
+        }
 export default Home;
