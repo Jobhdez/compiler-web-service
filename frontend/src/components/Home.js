@@ -54,15 +54,21 @@ function Home() {
         fetch(lispUrl+url, {
             method: 'POST',
             headers: {
+                'Accept': 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: data,
-            mode: 'no-cors'
+            mode: 'cors'
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("network response was not ok")
+            }
+            return response.json()
+        })
         .then(data => {
             // Display server response
-            console.log(JSON.stringify(data))
+            setCompiledCode(JSON.stringify(data.expression))
         })
         .catch(error => {
             console.error('Error:', error);
@@ -119,9 +125,18 @@ function Home() {
             
             <Editor height="calc(50vh - 25px)" theme="vs-dark" onChange={(val) => {setExpCode(val)}}/>
             <button onClick={Compile}>compile</button>
-            <div>
-                <pre>{CompiledCode}</pre>
-            </div>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh', width: '50%'}}>
+    <TextField
+        id="outlined-multiline-static"
+        label="Compiled Code"
+        multiline
+        fullWidth
+        rows={10} // Adjust the number of rows as needed
+        variant="outlined"
+        value={CompiledCode}
+        readOnly
+    />
+</div>
         </div>  
             
             
