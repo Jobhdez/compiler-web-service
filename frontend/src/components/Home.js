@@ -79,7 +79,7 @@ function Home() {
 
     return (
 	
-	<div>
+	<div style={{ backgroundColor: '#989898', padding: '20px' }}>
             <Grid container spacing={2}>
 		<Grid item>
 		    <Button
@@ -127,7 +127,7 @@ function Home() {
 		</Grid>
 	    </Grid>
 	    
-	    <Editor height="calc(50vh - 25px)" width='50%' theme="vs-dark" onChange={(val) => {setExpCode(val)}}/>
+	    <Editor height="calc(50vh - 25px)" theme="vs-dark" onChange={(val) => {setExpCode(val)}}/>
 	    <button onClick={Compile}>compile</button>
 
 	   <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh', width: '50%'}}>
