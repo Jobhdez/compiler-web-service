@@ -50,8 +50,8 @@ function compiledExpDetail(id, endpoint) {
   == Examples ==
   
 compiledExps("koi2", "(if ltrue 2 3)", "http://localhost:4243/scm-compilations")
+compiledExpDetail(3, "http://localhost:4243/scm-exp?id=")
 
 compiledExpListing("http://localhost:4243/scm-exps")
 */
-
-compiledExpDetail(3, "http://localhost:4243/scm-exp?id=")
+compiledExps("koi2", "(if ltrue 2 3)", "http://localhost:4243/scm-compilations")
