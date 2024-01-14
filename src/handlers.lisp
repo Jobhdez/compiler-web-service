@@ -25,12 +25,10 @@
 	    (e (,fn* exp))
 	    (re (,compilation-fn e))
 	    (htable2 (make-hash-table :test 'equal)))
-	    (if (find-dao 'user :username username)
-		(progn (create-dao ',table :exp exp :user (find-dao 'user :username username) :eval-exp (write-to-string re))
-		       (setf (gethash 'expression htable) (write-to-string re))
-                       (stringify htable))
-		(progn (setf (gethash 'response htable2) "Create an account")
-		       (stringify htable2))))))
+       (progn
+	 (create-dao ',table :exp exp :user (find-dao 'user :username username) :eval-exp (write-to-string re))
+	 (setf (gethash 'expression htable) (write-to-string re))
+        (stringify htable)))))
 
 
 (defmacro define-exp (fn uri table compilation-fn fn*)
@@ -109,9 +107,6 @@
     <label for=\"expressionInput\">Enter Expression:</label>
     <input type=\"text\" id=\"expressionInput\" placeholder=\"(if ltrue 2 3)\">
     
-    <label for=\"userInput\">Enter User:</label>
-    <input type=\"text\" id=\"userInput\" placeholder=\"compiler\">
-    
     <button onclick=\"sendRequest()\">Compile Expression</button>
     
     <div id=\"response\"></div>
@@ -123,7 +118,6 @@
             var user = document.getElementById(\"userInput\").value;
             // Create data object for POST request
             var data = new URLSearchParams();
-            data.append(\"user\", user);
             data.append(\"exp\", expression);
 
             // Make POST request
