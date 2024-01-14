@@ -67,7 +67,7 @@ function Home() {
 		return response.json()
             })
             .then(data => {
-		// Display server response
+	
 		setCompiledCode(JSON.stringify(data.expression))
             })
             .catch(error => {
@@ -131,7 +131,7 @@ function Home() {
 			label="Compiled Code"
 			multiline
 			fullWidth
-			rows={10} // Adjust the number of rows as needed
+			rows={10} 
 			variant="outlined"
 			value={CompiledCode}
 			readOnly
