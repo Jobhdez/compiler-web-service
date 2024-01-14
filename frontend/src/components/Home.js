@@ -17,12 +17,12 @@ function Home() {
     const [user, setUser] = React.useState("")
     const handleClose = () => {
         setAnchorEl(null);
-      };
+    };
     const open = Boolean(anchorEl);
 
     const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
-  };
+	setAnchorEl(event.currentTarget);
+    };
 
     const CpsHandle = () => {
         setUrl("cps-compilations")
@@ -60,87 +60,87 @@ function Home() {
             body: data,
             mode: 'cors'
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("network response was not ok")
-            }
-            return response.json()
-        })
-        .then(data => {
-            // Display server response
-            setCompiledCode(JSON.stringify(data.expression))
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+            .then(response => {
+		if (!response.ok) {
+                    throw new Error("network response was not ok")
+		}
+		return response.json()
+            })
+            .then(data => {
+		// Display server response
+		setCompiledCode(JSON.stringify(data.expression))
+            })
+            .catch(error => {
+		console.error('Error:', error);
+            });
     }
     
 
     return (
-    
-    <div>
-        <div>
-            <Button
-                id="basic-button"
-                aria-controls={open ? 'basic-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}
-            >
-                Pick your compiler
-            </Button>
-            <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                MenuListProps={{
-                'aria-labelledby': 'basic-button',
-                }}
-            >
-                <MenuItem onClick={CpsHandle}>CPS Compiler</MenuItem>
-                <MenuItem onClick={ScmHandle}>Scheme to Lambda compiler</MenuItem>
-                <MenuItem onClick={PyHandle}>Py compiler</MenuItem>
-                <MenuItem onClick={LalgHandle}> Lalg Compiler</MenuItem>
-            </Menu>
-        </div>
+	
+	<div>
+            <div>
+		<Button
+                    id="basic-button"
+                    aria-controls={open ? 'basic-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? 'true' : undefined}
+                    onClick={handleClick}
+		>
+                    Pick your compiler
+		</Button>
+		<Menu
+                    id="basic-menu"
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    MenuListProps={{
+			'aria-labelledby': 'basic-button',
+                    }}
+		>
+                    <MenuItem onClick={CpsHandle}>CPS Compiler</MenuItem>
+                    <MenuItem onClick={ScmHandle}>Scheme to Lambda compiler</MenuItem>
+                    <MenuItem onClick={PyHandle}>Py compiler</MenuItem>
+                    <MenuItem onClick={LalgHandle}> Lalg Compiler</MenuItem>
+		</Menu>
+            </div>
             <Box
-        component="form"
-        sx={{
-            '& > :not(style)': { m: 1, width: '25ch' },
-        }}
-        noValidate
-        autoComplete="off"
-        >
-        <TextField
-            id="outlined-controlled"
-            label="Username"
-            value={user}
-            onChange={(event) => {
-            setUser(event.target.value);
-            }}
-        />
-        </Box>
-        <div>
-            
-            <Editor height="calc(50vh - 25px)" theme="vs-dark" onChange={(val) => {setExpCode(val)}}/>
-            <button onClick={Compile}>compile</button>
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh', width: '50%'}}>
-    <TextField
-        id="outlined-multiline-static"
-        label="Compiled Code"
-        multiline
-        fullWidth
-        rows={10} // Adjust the number of rows as needed
-        variant="outlined"
-        value={CompiledCode}
-        readOnly
-    />
-</div>
-        </div>  
+		component="form"
+		sx={{
+		    '& > :not(style)': { m: 1, width: '25ch' },
+		}}
+		noValidate
+		autoComplete="off"
+            >
+		<TextField
+		    id="outlined-controlled"
+		    label="Username"
+		    value={user}
+		    onChange={(event) => {
+			setUser(event.target.value);
+		    }}
+		/>
+            </Box>
+            <div>
+		
+		<Editor height="calc(50vh - 25px)" theme="vs-dark" onChange={(val) => {setExpCode(val)}}/>
+		<button onClick={Compile}>compile</button>
+		<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh', width: '50%'}}>
+		    <TextField
+			id="outlined-multiline-static"
+			label="Compiled Code"
+			multiline
+			fullWidth
+			rows={10} // Adjust the number of rows as needed
+			variant="outlined"
+			value={CompiledCode}
+			readOnly
+		    />
+		</div>
+            </div>  
             
             
         </div>
     )
-        }
+}
 export default Home;
