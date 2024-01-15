@@ -4,6 +4,9 @@ import Editor from "@monaco-editor/react";
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
@@ -24,38 +27,33 @@ const images = [Lisp, SICP]
 function Home() {
     const [ExpCode, setExpCode] = useState("");
     const [CompiledCode, setCompiledCode] = useState("")
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [comp, setComp] = React.useState(null);
     const [url, setUrl] = React.useState("")
     const [user, setUser] = React.useState("")
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-    const open = Boolean(anchorEl);
 
-    const handleClick = (event) => {
-	setAnchorEl(event.currentTarget);
-    };
+    const handleChange = (event) => {
+	setComp(event.target.value);
+    }
+   
 
     const CpsHandle = () => {
         setUrl("cps-compilations")
-        setAnchorEl(null)
+        
     }
 
     const ScmHandle = () => {
         setUrl("scm-compilations")
-        setAnchorEl(null)
     }
 
     const PyHandle = () => {
         setUrl("py-compilations")
-        setAnchorEl(null)
     }
 
     const LalgHandle = () => {
         setUrl("lalg-compilations")
-        setAnchorEl(null)
     }
 
+    const scm = "Scheme to Lambda compiler"
 
     function Compile() {
         var data = new URLSearchParams();
@@ -93,29 +91,29 @@ function Home() {
 	<div style={{ backgroundColor: '#989898', padding: '20px' }}>
             <Grid container spacing={2}>
 		<Grid item>
-		    <Button
-			id="basic-button"
-			aria-controls={open ? 'basic-menu' : undefined}
-			aria-haspopup="true"
-			aria-expanded={open ? 'true' : undefined}
-			onClick={handleClick}
-		    >
-			Pick your compiler
-		    </Button>
-		    <Menu
-			id="basic-menu"
-			anchorEl={anchorEl}
-			open={open}
-			onClose={handleClose}
-			MenuListProps={{
-			    'aria-labelledby': 'basic-button',
-			}}
-		    >
-			<MenuItem onClick={CpsHandle}>CPS Compiler</MenuItem>
-			<MenuItem onClick={ScmHandle}>Scheme to Lambda compiler</MenuItem>
-			<MenuItem onClick={PyHandle}>Py compiler</MenuItem>
-			<MenuItem onClick={LalgHandle}> Lalg Compiler</MenuItem>
-		    </Menu>
+		    <FormControl fullWidth>
+			<InputLabel
+			sx={{
+                                color: 'white', // Set label color to white
+                            }}
+			>Compilers</InputLabel>
+		    <Select
+			label="Compilers"
+			value={comp}
+		    onChange={handleChange}
+			sx={{
+			    width: 250,
+			    height: 50,
+			    backgroundColor: 'black',
+			    color: 'white',
+			}}>
+		 
+			<MenuItem value={1} onClick={CpsHandle}>CPS Compiler</MenuItem>
+			<MenuItem value={2} onClick={ScmHandle}>Scheme to Lambda compiler</MenuItem>
+			<MenuItem value={3} onClick={PyHandle}>Py compiler</MenuItem>
+			<MenuItem value={4} onClick={LalgHandle}> Lalg Compiler</MenuItem>
+		    </Select>
+			</FormControl>
 		</Grid>
 		<Grid item>
 		    <Box
@@ -133,13 +131,31 @@ function Home() {
 			    onChange={(event) => {
 				setUser(event.target.value);
 			    }}
+			     InputLabelProps={{
+                                style: { color: 'white' }, // Set label color to white
+                            }}
+			     sx={{
+                                backgroundColor: 'black',
+				 '& input': {
+                                    color: 'white', 
+                                },
+                            }}
 			/>
 		    </Box>
 		</Grid>
 	    </Grid>
 	   
 		    <Editor height="calc(50vh - 25px)"  theme="vs-dark" onChange={(val) => {setExpCode(val)}}/>
-	    <Button onClick={Compile} variant="contained">Compile Exp</Button>
+	    <Button
+		onClick={Compile}
+		variant="contained"
+	         sx={{
+                    backgroundColor: 'black', // Set black background
+                    color: 'white', // Set text color to white
+                    '&:hover': {
+                        backgroundColor: 'darkgray', // Set a different color on hover if desired
+                    },
+                }}>Compile Exp</Button>
 		
 		<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh', width: '50%'}}>
 		    <TextField
@@ -151,6 +167,15 @@ function Home() {
 			variant="outlined"
 			value={CompiledCode}
 			readOnly
+			sx={{
+			    backgroundColor: 'black',
+			    color: 'white',
+			    '& .MuiInputLabel-root, & .MuiOutlinedInput-notchedOutline, & .MuiInputBase-input': {
+                            color: 'white', // Set label, border, and text color to white
+                        },
+			    
+			}}
+			   
 		    />
 		</div>
 		
