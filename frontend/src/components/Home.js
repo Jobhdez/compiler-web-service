@@ -7,9 +7,20 @@ import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
-
+import Lisp from '../assets/lisp2.png';
+import Haskell from '../assets/haskell.png';
+import Racket from '../assets/racket.png';
+import SICP from '../assets/sicp.jpg';
+import { styled } from '@mui/material/styles'
 const lispUrl = "http://localhost:4243/"
 
+const StyledImg = styled('img')(({ theme }) => ({
+    marginRight: theme.spacing(10),
+    width: '80%',
+    height: '500px',
+}));
+
+const images = [Lisp, SICP]
 function Home() {
     const [ExpCode, setExpCode] = useState("");
     const [CompiledCode, setCompiledCode] = useState("")
@@ -126,23 +137,23 @@ function Home() {
 		    </Box>
 		</Grid>
 	    </Grid>
-	    
-	    <Editor height="calc(50vh - 25px)" theme="vs-dark" onChange={(val) => {setExpCode(val)}}/>
-	    <button onClick={Compile}>compile</button>
-
-	   <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh', width: '50%'}}>
-		<TextField
-		    id="outlined-multiline-static"
-		    label="Compiled Code"
-		    multiline
-		    fullWidth
-		    rows={10} // Adjust the number of rows as needed
-		    variant="outlined"
-		    value={CompiledCode}
-		    readOnly
-		/>
-            </div>
-	    
-	</div>
-    )}
-export default Home;
+	   
+		    <Editor height="calc(50vh - 25px)"  theme="vs-dark" onChange={(val) => {setExpCode(val)}}/>
+	    <Button onClick={Compile} variant="contained">Compile Exp</Button>
+		
+		<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh', width: '50%'}}>
+		    <TextField
+			id="outlined-multiline-static"
+			label="Compiled Code"
+			multiline
+			fullWidth
+			rows={10} // Adjust the number of rows as needed
+			variant="outlined"
+			value={CompiledCode}
+			readOnly
+		    />
+		</div>
+		
+	    </div>
+	    )}
+	    export default Home;
