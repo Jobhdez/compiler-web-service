@@ -27,10 +27,10 @@ http://localhost:4243/lalg-exps
 The following return a detailed exp,compiled exp pair:
 
 ```
-http://localhost:4243/scm-exp
-http://localhost:4243/cps-exp
-http://localhost:4243/py-exp
-http://localhost:4243/lalg-exp 
+http://localhost:4243/scm-exp?id=
+http://localhost:4243/cps-exp?id=
+http://localhost:4243/py-exp?id=
+http://localhost:4243/lalg-exp?id=
 ```
 
 ### POST
