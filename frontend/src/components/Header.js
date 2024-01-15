@@ -6,10 +6,9 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import MenuIcon from '@mui/icons-material/Menu';
-import Link from '@mui/material/Link';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-
+import McCarthy from '../assets/lisp.png';
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   alignItems: 'flex-start',
@@ -20,7 +19,11 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
     minHeight: 128,
   },
 }));
-						
+
+const StyledImg = styled('img')(({ theme }) => ({
+    marginRight: theme.spacing(30),
+    maxHeight: 150,
+}));
 function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -61,6 +64,7 @@ function Header() {
           >
 	      Explore my compilers :-)
           </Typography>
+	    <StyledImg src={McCarthy} />
         </StyledToolbar>
       </AppBar>
     </Box>
