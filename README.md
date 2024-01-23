@@ -67,9 +67,7 @@ http://localhost:4243/compiled-lalg-exps
 # Running the React frontend app
 1. Move to `frontend` folder.
 2. `npm start`.
-3. While the Lisp server is running type an expression, e.g., `(if (= 1 1) 1 2)`, and see the compiled lambda calculus and cps code.
-
-note: This React frontend does not work
+3. pick the compiler and compile it
 
 # Some Examples
 ```
