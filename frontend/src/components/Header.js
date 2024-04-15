@@ -1,29 +1,31 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import MenuIcon from '@mui/icons-material/Menu';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import McCarthy from '../assets/lisp.png';
-
+import * as React from "react";
+import { styled } from "@mui/material/styles";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import MenuIcon from "@mui/icons-material/Menu";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import McCarthy from "../assets/lisp.png";
+import { NavLink as MuiLink } from "react-router-dom";
+/*
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
-  alignItems: 'flex-start',
+  alignItems: "flex-start",
   paddingTop: theme.spacing(1),
   paddingBottom: theme.spacing(2),
   // Override media queries injected by theme.mixins.toolbar
-  '@media all': {
-    minHeight: 128,
+  "@media all": {
+    minHeight: 1,
   },
 }));
-
-const StyledImg = styled('img')(({ theme }) => ({
-    marginRight: theme.spacing(30),
-    maxHeight: 150,
+*/
+const StyledImg = styled("img")(({ theme }) => ({
+  marginRight: theme.spacing(30),
+  maxHeight: 150,
 }));
+
 function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -33,39 +35,41 @@ function Header() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-	<AppBar position="static"
-		style={{background: '#000000' }}
-	>
-	<StyledToolbar>
+      <AppBar position="static" style={{ background: "#B0E0E6" }}>
+        <Toolbar>
           <IconButton
             size="large"
             edge="start"
-            color="inherit"
+            color="black"
             aria-label="open drawer"
             sx={{ mr: 2 }}
-	      onClick={handleClick}  
+            onClick={handleClick}
           >
             <MenuIcon />
           </IconButton>
-	    <Menu id="basic-menu" anchorEl={anchorEl}
-		  open={open}
-		  onClose={handleClose}
-		  MenuListProps={{'aria-labelledby': 'basic-button',}}>
-		<MenuItem>Listing</MenuItem>
-		<MenuItem>Detailed</MenuItem>
-	</Menu>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{ "aria-labelledby": "basic-button" }}
+          >
+            <MenuItem>Listing</MenuItem>
+            <MenuItem>Detailed</MenuItem>
+          </Menu>
           <Typography
             variant="h5"
             noWrap
             component="div"
-            sx={{ flexGrow: 1, alignSelf: 'flex-end' }}
+            color="black"
+            sx={{ flexGrow: 1, alignSelf: "flex-end" }}
           >
-	      Explore my compilers :-)
+            Manifold Compiler Engine
           </Typography>
-	    <StyledImg src={McCarthy} />
-        </StyledToolbar>
+        </Toolbar>
       </AppBar>
     </Box>
   );
