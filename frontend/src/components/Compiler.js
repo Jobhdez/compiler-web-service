@@ -1,7 +1,5 @@
-
 function Compiler() {
-
-      const [ExpCode, setExpCode] = useState("");
+  const [ExpCode, setExpCode] = useState("");
   const [CompiledCode, setCompiledCode] = useState("");
   const [comp, setComp] = React.useState(null);
   const [url, setUrl] = React.useState("");
@@ -43,13 +41,15 @@ function Compiler() {
       },
       body: data,
       mode: "cors",
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("network response was not ok");
-        }
-        return response.json();
-      })  const [ExpCode, setExpCode] = useState("");
+    }).then((response) => {
+      if (!response.ok) {
+        throw new Error("network response was not ok");
+      }
+      return response.json();
+    });
+  }
+
+  const [ExpCode, setExpCode] = useState("");
   const [CompiledCode, setCompiledCode] = useState("");
   const [comp, setComp] = React.useState(null);
   const [url, setUrl] = React.useState("");
@@ -68,20 +68,14 @@ function Compiler() {
   };
 
   const PyHandle = () => {
+    setUrl("py-compilations");
+  };
 
-      .then((data) => {
-        setCompiledCode(JSON.stringify(data.expression));
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }
-
-    return (
-	<div>
-	      <Grid container spacing={2}>
+  return (
+    <div>
+      <Grid container spacing={2}>
         <Grid item>
-            <FormControl size='small'>
+          <FormControl size="small">
             <InputLabel
               sx={{
                 color: "white", // Set label color to white
@@ -145,22 +139,28 @@ function Compiler() {
           </Box>
         </Grid>
       </Grid>
-	<Grid container spacing={2}>
-	    <Grid item xs={8}>
-		<item><Editor
-        height="calc(50vh - 25px)"
-        theme="vs-dark"
-        onChange={(val) => {
-          setExpCode(val);
-        }}
-		      /></item>
-	    </Grid>
-	    <Grid item xs={4}>
-		<item>
-		<pre> <code>{CompiledCode} </code></pre></item>
-	    </Grid>
-	</Grid>
-	
+      <Grid container spacing={2}>
+        <Grid item xs={8}>
+          <item>
+            <Editor
+              height="calc(50vh - 25px)"
+              theme="vs-dark"
+              onChange={(val) => {
+                setExpCode(val);
+              }}
+            />
+          </item>
+        </Grid>
+        <Grid item xs={4}>
+          <item>
+            <pre>
+              {" "}
+              <code>{CompiledCode} </code>
+            </pre>
+          </item>
+        </Grid>
+      </Grid>
+
       <Button
         onClick={Compile}
         variant="contained"
@@ -173,7 +173,7 @@ function Compiler() {
         }}
       >
         Compile Exp
-	</Button>
-	    </div>
-    )
+      </Button>
+    </div>
+  );
 }
