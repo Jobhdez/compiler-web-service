@@ -8,9 +8,9 @@ import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/Menu";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import McCarthy from "../assets/lisp.png";
+import CityFc from "../assets/IMG_1378.jpeg";
 import { NavLink as MuiLink } from "react-router-dom";
-/*
+
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   alignItems: "flex-start",
   paddingTop: theme.spacing(1),
@@ -20,7 +20,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
     minHeight: 1,
   },
 }));
-*/
+
 const StyledImg = styled("img")(({ theme }) => ({
   marginRight: theme.spacing(30),
   maxHeight: 150,
@@ -38,8 +38,8 @@ function Header() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" style={{ background: "#006400" }}>
-        <Toolbar>
+      <AppBar position="static" style={{ background: "#3CB371" }}>
+        <StyledToolbar>
           <IconButton
             size="large"
             edge="start"
@@ -65,11 +65,12 @@ function Header() {
             noWrap
             component="div"
             color="black"
+            fontFamily="monospace"
             sx={{ flexGrow: 1, alignSelf: "flex-end" }}
           >
             Manifold Compiler Engine
           </Typography>
-        </Toolbar>
+        </StyledToolbar>
       </AppBar>
     </Box>
   );
