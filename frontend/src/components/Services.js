@@ -1,9 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 
@@ -18,46 +16,56 @@ const bull = (
 
 export default function Services() {
   return (
-    <div>
+    <div style={{ height: "400px", overflow: "auto" }}>
       <Grid container spacing={5} justify="center">
-        <Grid item xs={4}>
-          <Card sx={{ width: "100%", height: "300%", background: "#006400" }}>
+        <Grid item xs={6}>
+          <Card sx={{ width: "100%", background: "#3CB371" }}>
             <CardContent>
               <Typography
                 sx={{ fontSize: 14 }}
                 color="text.secondary"
                 gutterBottom
+                fontFamily="monospace"
               >
-                Use our compiler engine api to interview your candidates
+                <strong>Cost Effective</strong>
+              </Typography>
+              <Typography fontFamily="monospace">
+                Faster generated code means less cycles which means reduced
+                cost.
               </Typography>
             </CardContent>
           </Card>
-        </Grid>
-        <Grid item xs={4}>
-          <Card sx={{ width: "100%", height: "300%", background: "#006400" }}>
-            <CardContent>
-              <Typography
-                sx={{ fontSize: 14 }}
-                color="text.secondary"
-                gutterBottom
-              >
-                Generate efficient matrix multiplication kernels
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={4}>
-          <Card sx={{ width: "100%", height: "300%", background: "#006400" }}>
-            <CardContent>
-              <Typography
-                sx={{ fontSize: 14 }}
-                color="text.secondary"
-                gutterBottom
-              >
-                Teach the beauty of Scheme and computation
-              </Typography>
-            </CardContent>
-          </Card>
+
+          <div style={{ marginTop: "20px" }}>
+            <Card sx={{ width: "100%", background: "#3CB371" }}>
+              <CardContent>
+                <Typography fontFamily="monospace">Faster</Typography>
+                <Typography
+                  sx={{ fontSize: 14 }}
+                  color="text.secondary"
+                  gutterBottom
+                  fontFamily="monospace"
+                >
+                  Generate efficient matrix multiplication kernels
+                </Typography>
+              </CardContent>
+            </Card>
+          </div>
+          <div style={{ marginTop: "20px" }}>
+            <Card sx={{ width: "100%", background: "#3CB371" }}>
+              <CardContent>
+                <Typography fontFamily="monospace">Educational</Typography>
+                <Typography
+                  sx={{ fontSize: 14 }}
+                  color="text.secondary"
+                  gutterBottom
+                  fontFamily="monospace"
+                >
+                  Learn how constructs get represented in assembly
+                </Typography>
+              </CardContent>
+            </Card>
+          </div>
         </Grid>
       </Grid>
     </div>
