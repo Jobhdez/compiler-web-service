@@ -1,14 +1,17 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import Services from "./Services";
 
 function Home() {
   return (
     <div
       style={{
+        minHeight: "100vh", // Ensure the content stretches to at least the full viewport height
         background: "linear-gradient(to bottom, #B0E0E6, #FFFFFF)",
         paddingTop: "100px",
         paddingBottom: "100px",
+        position: "relative", // Add relative positioning to the container
       }}
     >
       <Grid container spacing={2} alignItems="center" justifyContent="center">
@@ -42,6 +45,7 @@ function Home() {
           </Typography>
         </Grid>
       </Grid>
+      <Services />
     </div>
   );
 }
