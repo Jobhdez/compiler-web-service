@@ -66,9 +66,7 @@ function Header() {
             color="black"
             fontFamily="monospace"
             sx={{ flexGrow: 1, alignSelf: "flex-end" }}
-          >
-            Manifold Compiler Engine
-          </Typography>
+          ></Typography>
         </StyledToolbar>
       </AppBar>
     </Box>

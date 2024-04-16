@@ -3,6 +3,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Services from "./Services";
 import Button from "@mui/material/Button";
+import Compiler from "./Compiler";
 
 function Home() {
   return (
@@ -40,6 +41,7 @@ function Home() {
       </Grid>
       <div style={{ marginTop: "350px", marginLeft: "20px" }}>
         <Services />
+        <Compiler />
       </div>
     </div>
   );

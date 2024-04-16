@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 
 const bull = (
@@ -19,7 +20,16 @@ export default function Services() {
     <div style={{ height: "400px", overflow: "auto" }}>
       <Grid container spacing={5} justify="center">
         <Grid item xs={6}>
-          <Card sx={{ width: "100%", background: "#3CB371" }}>
+          <Card
+            sx={{
+              width: "100%",
+              background: "#3CB371",
+              transition: "background 0.3s",
+              "&:hover": {
+                background: "#DCDCDC",
+              },
+            }}
+          >
             <CardContent>
               <Typography
                 sx={{ fontSize: 14 }}
@@ -37,7 +47,16 @@ export default function Services() {
           </Card>
 
           <div style={{ marginTop: "20px" }}>
-            <Card sx={{ width: "100%", background: "#3CB371" }}>
+            <Card
+              sx={{
+                width: "100%",
+                background: "#3CB371",
+                transition: "background 0.3s",
+                "&:hover": {
+                  background: "#DCDCDC",
+                },
+              }}
+            >
               <CardContent>
                 <Typography fontFamily="monospace">Faster</Typography>
                 <Typography
@@ -52,7 +71,16 @@ export default function Services() {
             </Card>
           </div>
           <div style={{ marginTop: "20px" }}>
-            <Card sx={{ width: "100%", background: "#3CB371" }}>
+            <Card
+              sx={{
+                width: "100%",
+                background: "#3CB371",
+                transition: "background 0.3s",
+                "&:hover": {
+                  background: "#DCDCDC",
+                },
+              }}
+            >
               <CardContent>
                 <Typography fontFamily="monospace">Educational</Typography>
                 <Typography
@@ -66,6 +94,11 @@ export default function Services() {
               </CardContent>
             </Card>
           </div>
+        </Grid>
+        <Grid item xs={6}>
+          <Button>
+            <Typography fontFamily="monospace">Try compilers now!</Typography>
+          </Button>
         </Grid>
       </Grid>
     </div>

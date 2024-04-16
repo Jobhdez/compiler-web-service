@@ -1,9 +1,22 @@
+import React, { useState } from "react";
+import {
+  Box,
+  Button,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
+import Editor from "@monaco-editor/react";
+
 function Compiler() {
   const [ExpCode, setExpCode] = useState("");
   const [CompiledCode, setCompiledCode] = useState("");
-  const [comp, setComp] = React.useState(null);
-  const [url, setUrl] = React.useState("");
-  const [user, setUser] = React.useState("");
+  const [comp, setComp] = useState(null);
+  const [url, setUrl] = useState("");
+  const [user, setUser] = useState("");
 
   const handleChange = (event) => {
     setComp(event.target.value);
@@ -24,9 +37,7 @@ function Compiler() {
   const LalgHandle = () => {
     setUrl("lalg-compilations");
   };
-
-  const scm = "Scheme to Lambda compiler";
-
+  const lispUrl = "";
   function Compile() {
     var data = new URLSearchParams();
     data.append("user", user);
@@ -48,28 +59,6 @@ function Compiler() {
       return response.json();
     });
   }
-
-  const [ExpCode, setExpCode] = useState("");
-  const [CompiledCode, setCompiledCode] = useState("");
-  const [comp, setComp] = React.useState(null);
-  const [url, setUrl] = React.useState("");
-  const [user, setUser] = React.useState("");
-
-  const handleChange = (event) => {
-    setComp(event.target.value);
-  };
-
-  const CpsHandle = () => {
-    setUrl("cps-compilations");
-  };
-
-  const ScmHandle = () => {
-    setUrl("scm-compilations");
-  };
-
-  const PyHandle = () => {
-    setUrl("py-compilations");
-  };
 
   return (
     <div>
@@ -104,7 +93,6 @@ function Compiler() {
                 Py compiler
               </MenuItem>
               <MenuItem value={4} onClick={LalgHandle}>
-                {" "}
                 Lalg Compiler
               </MenuItem>
             </Select>
@@ -140,24 +128,23 @@ function Compiler() {
         </Grid>
       </Grid>
       <Grid container spacing={2}>
-        <Grid item xs={8}>
-          <item>
+        <Grid item xs={6}>
+          <Box>
             <Editor
               height="calc(50vh - 25px)"
-              theme="vs-dark"
+              theme="vs-light"
               onChange={(val) => {
                 setExpCode(val);
               }}
             />
-          </item>
+          </Box>
         </Grid>
         <Grid item xs={4}>
-          <item>
+          <Box>
             <pre>
-              {" "}
-              <code>{CompiledCode} </code>
+              <code>{CompiledCode}</code>
             </pre>
-          </item>
+          </Box>
         </Grid>
       </Grid>
 
@@ -177,3 +164,4 @@ function Compiler() {
     </div>
   );
 }
+export default Compiler;
