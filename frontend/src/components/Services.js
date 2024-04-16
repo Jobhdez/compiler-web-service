@@ -18,10 +18,10 @@ const bull = (
 
 export default function Services() {
   return (
-    <Box p={5} background="#F0FFF">
+    <div>
       <Grid container spacing={5} justify="center">
         <Grid item xs={4}>
-          <Card sx={{ width: "100%", height: "300%" }}>
+          <Card sx={{ width: "100%", height: "300%", background: "#006400" }}>
             <CardContent>
               <Typography
                 sx={{ fontSize: 14 }}
@@ -34,7 +34,7 @@ export default function Services() {
           </Card>
         </Grid>
         <Grid item xs={4}>
-          <Card sx={{ width: "100%", height: "300%" }}>
+          <Card sx={{ width: "100%", height: "300%", background: "#006400" }}>
             <CardContent>
               <Typography
                 sx={{ fontSize: 14 }}
@@ -47,7 +47,7 @@ export default function Services() {
           </Card>
         </Grid>
         <Grid item xs={4}>
-          <Card sx={{ width: "100%", height: "300%" }}>
+          <Card sx={{ width: "100%", height: "300%", background: "#006400" }}>
             <CardContent>
               <Typography
                 sx={{ fontSize: 14 }}
@@ -60,6 +60,6 @@ export default function Services() {
           </Card>
         </Grid>
       </Grid>
-    </Box>
+    </div>
   );
 }

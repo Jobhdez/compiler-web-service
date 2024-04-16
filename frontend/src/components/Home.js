@@ -8,7 +8,7 @@ function Home() {
     <div
       style={{
         minHeight: "100vh", // Ensure the content stretches to at least the full viewport height
-        background: "linear-gradient(to bottom, #B0E0E6, #FFFFFF)",
+        background: "linear-gradient(to bottom, #006400, #FFFFFF)",
         paddingTop: "100px",
         paddingBottom: "100px",
         position: "relative", // Add relative positioning to the container
