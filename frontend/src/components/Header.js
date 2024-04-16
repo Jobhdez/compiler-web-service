@@ -8,7 +8,6 @@ import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/Menu";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import CityFc from "../assets/IMG_1378.jpeg";
 import { NavLink as MuiLink } from "react-router-dom";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
