@@ -95,11 +95,6 @@ export default function Services() {
             </Card>
           </div>
         </Grid>
-        <Grid item xs={6}>
-          <Button>
-            <Typography fontFamily="monospace">Try compilers now!</Typography>
-          </Button>
-        </Grid>
       </Grid>
     </div>
   );
