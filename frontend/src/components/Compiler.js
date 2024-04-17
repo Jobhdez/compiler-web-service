@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   Box,
   Button,
+  Typography,
   FormControl,
   Grid,
   InputLabel,
@@ -67,7 +68,8 @@ function Compiler() {
           <FormControl size="small">
             <InputLabel
               sx={{
-                color: "white", // Set label color to white
+                color: "black",
+                fontFamily: "monospace",
               }}
             >
               Compilers
@@ -79,8 +81,7 @@ function Compiler() {
               sx={{
                 width: 250,
                 height: 50,
-                backgroundColor: "black",
-                color: "white",
+                backgroundColor: "#3CB371",
               }}
             >
               <MenuItem value={1} onClick={CpsHandle}>
@@ -97,34 +98,6 @@ function Compiler() {
               </MenuItem>
             </Select>
           </FormControl>
-        </Grid>
-        <Grid item>
-          <Box
-            component="form"
-            sx={{
-              "& > :not(style)": { m: 1, width: "25ch" },
-            }}
-            noValidate
-            autoComplete="off"
-          >
-            <TextField
-              id="outlined-controlled"
-              label="Username"
-              value={user}
-              onChange={(event) => {
-                setUser(event.target.value);
-              }}
-              InputLabelProps={{
-                style: { color: "white" }, // Set label color to white
-              }}
-              sx={{
-                backgroundColor: "black",
-                "& input": {
-                  color: "white",
-                },
-              }}
-            />
-          </Box>
         </Grid>
       </Grid>
       <Grid container spacing={2}>
@@ -152,8 +125,8 @@ function Compiler() {
         onClick={Compile}
         variant="contained"
         sx={{
-          backgroundColor: "black", // Set black background
-          color: "white", // Set text color to white
+          backgroundColor: "#3CB371",
+          color: "black",
           "&:hover": {
             backgroundColor: "darkgray", // Set a different color on hover if desired
           },
