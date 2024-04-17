@@ -18,24 +18,49 @@ function Home() {
     >
       <Grid container spacing={2} alignItems="center" justifyContent="center">
         <Grid item xs={6}>
-          <Typography variant="h3" align="center" fontFamily="monospace">
+          <Typography variant="h2" align="center" fontFamily="monospace">
             Effient
           </Typography>
-          <Typography variant="h3" align="center" fontFamily="monospace">
+          <Typography variant="h2" align="center" fontFamily="monospace">
             compilation engine
+          </Typography>
+          <Typography
+            style={{ marginTop: "10px" }}
+            fontFamily="monospace"
+            align="center"
+          >
+            {" "}
+            Build your own interview engine using efficient cloud compilers
           </Typography>
         </Grid>
         <Grid item xs={6}>
           <Typography variant="h6" fontFamily="monospace">
-            Scheme to CPS compilation
+            Scheme API
+          </Typography>
+          <Typography style={{ marginTop: "10px" }} fontFamily="monospace">
+            Efficient Scheme to CPS computation for education
           </Typography>
           <Typography></Typography>
-          <Typography variant="h6" fontFamily="monospace">
-            Generate efficient linear algebra kernels
+          <Typography
+            variant="h6"
+            style={{ marginTop: "10px" }}
+            fontFamily="monospace"
+          >
+            Matrix API
+          </Typography>
+          <Typography style={{ marginTop: "10px" }} fontFamily="monospace">
+            Generate efficient matrix and vector kernels
           </Typography>
           <Typography></Typography>
-          <Typography variant="h6" fontFamily="monospace">
-            API for a Python like compiler
+          <Typography
+            variant="h6"
+            fontFamily="monospace"
+            style={{ marginTop: "10px" }}
+          >
+            Python API
+          </Typography>
+          <Typography style={{ marginTop: "10px" }} fontFamily="monospace">
+            Call a Python like language and compute in the cloud
           </Typography>
         </Grid>
       </Grid>
