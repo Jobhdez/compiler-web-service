@@ -38,7 +38,8 @@ function Compiler() {
   const LalgHandle = () => {
     setUrl("lalg-compilations");
   };
-  const lispUrl = "";
+  const lispApi = "http://localhost:4243/";
+
   function Compile() {
     var data = new URLSearchParams();
     data.append("user", user);
