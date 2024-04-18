@@ -42,11 +42,11 @@ function Compiler() {
 
   function Compile() {
     var data = new URLSearchParams();
-    data.append("user", user);
+    //data.append("user", user);
     data.append("exp", ExpCode);
     console.log(typeof user);
     console.log(typeof ExpCode);
-    fetch(lispUrl + url, {
+    fetch(lispApi + url, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -54,12 +54,11 @@ function Compiler() {
       },
       body: data,
       mode: "cors",
-    }).then((response) => {
-      if (!response.ok) {
-        throw new Error("network response was not ok");
-      }
-      return response.json();
-    });
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setCompiledCode(data.expression);
+      });
   }
 
   return (
