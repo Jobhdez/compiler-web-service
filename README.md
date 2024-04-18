@@ -1,11 +1,6 @@
 # Compiler web service
 This backend consists of 4 compilers
 the most substantial of which is a "Python" to x86 AST.
-
-# Illustration
-![](IMG_1480.jpeg)
-![](IMG_1481.jpeg)
-![](IMG_1482.jpeg)
 # Installation and Loading
 This project depends on [JZON](https://github.com/Zulu-Inuoe/jzon), which is not on quicklisp, so:
 
