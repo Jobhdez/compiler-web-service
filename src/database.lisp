@@ -45,3 +45,8 @@
 
 (defun ensure-tables ()
   (mapcar #'ensure-table-exists '(user py-exp scm-lambda-exp lalg-exp cps-exp)))
+"""
+(define-tables)
+(make-tables)
+(ensure-tables)
+"""
