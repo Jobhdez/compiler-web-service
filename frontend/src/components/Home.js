@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import Services from "./Services";
 import Button from "@mui/material/Button";
 import Compiler from "./Compiler";
-import SlidingBanner from "./SlidingBanner"
+import SlidingBanner from "./SlidingBanner";
 import BeachAccessIcon from "@mui/icons-material/BeachAccess";
 import CoffeeIcon from "@mui/icons-material/Coffee";
 import BrightnessHighIcon from "@mui/icons-material/BrightnessHigh";
@@ -78,8 +78,8 @@ function Home() {
         </Grid>
       </Grid>
       <div style={{ marginTop: "350px", marginLeft: "20px" }}>
-          <Services />
-	  <SlidingBanner/>
+        <Services />
+        <SlidingBanner />
         <Compiler />
       </div>
     </div>
