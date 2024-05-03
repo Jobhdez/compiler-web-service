@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import { motion, useAnimation } from "framer-motion"; // Import motion components
 import Services from "./Services";
 import Button from "@mui/material/Button";
 import Compiler from "./Compiler";
@@ -10,24 +11,54 @@ import CoffeeIcon from "@mui/icons-material/Coffee";
 import BrightnessHighIcon from "@mui/icons-material/BrightnessHigh";
 
 function Home() {
+  const [text, setText] = useState("Efficient");
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setText((prevText) => {
+        if (prevText === "Efficient") return "Customizable";
+        else if (prevText === "Customizable") return "Reliable";
+        else return "Efficient";
+      });
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div
       style={{
-        minHeight: "100vh", // Ensure the content stretches to at least the full viewport height
+        minHeight: "100vh",
         background: "linear-gradient(to bottom, #3CB371, #FFFFFF)",
         paddingTop: "100px",
         paddingBottom: "100px",
-        position: "relative", // Add relative positioning to the container
+        position: "relative",
       }}
     >
       <Grid container spacing={2} alignItems="center" justifyContent="center">
         <Grid item xs={6}>
-          <Typography variant="h2" align="center" fontFamily="monospace">
-            Effient
-          </Typography>
-          <Typography variant="h2" align="center" fontFamily="monospace">
-            compilation engine
-          </Typography>
+          <motion.div
+            initial={{ opacity: 0 }} // Initial opacity
+            animate={{ opacity: 1 }} // Animate to fully visible
+            transition={{ duration: 1 }} // Animation duration
+          >
+            <Typography
+              variant="h2"
+              align="center"
+              color="white"
+              fontFamily="monospace"
+            >
+              {text}
+            </Typography>
+            <Typography
+              variant="h2"
+              align="center"
+              fontFamily="monospace"
+              style={{ marginTop: "-20px" }} // Adjust spacing
+            >
+              compilation engine
+            </Typography>
+          </motion.div>
           <Typography
             style={{ marginTop: "10px" }}
             fontFamily="monospace"
@@ -79,7 +110,6 @@ function Home() {
       </Grid>
       <div style={{ marginTop: "350px", marginLeft: "20px" }}>
         <Services />
-        <SlidingBanner />
         <Compiler />
       </div>
     </div>
