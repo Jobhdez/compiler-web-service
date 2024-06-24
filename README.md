@@ -1,4 +1,6 @@
-# Compiler web service
+# Compiler web platform
+![compiler web platform](service.png)
+
 This backend consists of 4 compilers
 the most substantial of which is a "Python" to x86 AST.
 # Installation and Loading
